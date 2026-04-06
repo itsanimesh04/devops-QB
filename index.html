@@ -1,0 +1,3142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps Complete Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --border: #1f2d45;
+    --accent: #00c2ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-bright: #f8fafc;
+    --mark2: #2a1060;
+    --mark7: #0c3d2a;
+    --mark15: #3a1a06;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f1a35 50%, #0a0e1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,194,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(0,194,255,0.1);
+    border: 1px solid rgba(0,194,255,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    color: var(--text-bright);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 600px;
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 3px;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+  }
+  .nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 14px 12px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 50px 30px 80px; }
+
+  /* TOPIC CARD */
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 50px;
+    overflow: hidden;
+  }
+  .topic-header {
+    padding: 28px 32px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .topic-num {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .topic-header h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 5px;
+  }
+  .topic-header p { color: var(--text-dim); font-size: 13.5px; }
+
+  /* RESOURCE STRIP */
+  .resource-strip {
+    background: var(--surface2);
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .resource-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 4px;
+  }
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,194,255,0.08);
+    border: 1px solid rgba(0,194,255,0.2);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .resource-link:hover { background: rgba(0,194,255,0.18); }
+  .resource-link::before { content: '▶'; font-size: 9px; }
+
+  /* QUESTIONS */
+  .questions-section { padding: 28px 32px; }
+  .questions-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .questions-section h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* QUESTION BLOCK */
+  .q-block {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+  .q-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .q-header:hover { filter: brightness(1.05); }
+  .mark-badge {
+    flex-shrink: 0;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 1px;
+  }
+  .m2 { background: var(--mark2); color: #a78bfa; border: 1px solid #4c1d95; }
+  .m7 { background: var(--mark7); color: #34d399; border: 1px solid #065f46; }
+  .m15 { background: var(--mark15); color: #fbbf24; border: 1px solid #92400e; }
+
+  .q-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-bright);
+    flex: 1;
+    line-height: 1.5;
+  }
+  .q-arrow {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .q-block.open .q-arrow { transform: rotate(180deg); }
+
+  .q-answer {
+    display: none;
+    padding: 20px 24px 24px;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+  .q-block.open .q-answer { display: block; }
+
+  /* ANSWER STYLING */
+  .q-answer h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent3);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 18px 0 8px;
+  }
+  .q-answer h4:first-child { margin-top: 0; }
+  .q-answer p { color: var(--text); font-size: 14px; margin-bottom: 10px; line-height: 1.8; }
+  .q-answer ul, .q-answer ol { padding-left: 22px; margin-bottom: 12px; }
+  .q-answer li { color: var(--text); font-size: 14px; line-height: 1.75; margin-bottom: 4px; }
+  .q-answer strong { color: var(--text-bright); }
+
+  .def-box {
+    background: rgba(0,194,255,0.06);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0 14px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .diagram {
+    background: #0d1526;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    overflow-x: auto;
+    margin: 12px 0;
+    white-space: pre;
+    line-height: 1.6;
+  }
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--text-bright);
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent4); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  /* BG colors per topic */
+  .t1 .topic-num { background: rgba(0,194,255,0.12); color: var(--accent); }
+  .t2 .topic-num { background: rgba(124,58,237,0.12); color: #a78bfa; }
+  .t3 .topic-num { background: rgba(16,185,129,0.12); color: var(--accent3); }
+  .t4 .topic-num { background: rgba(245,158,11,0.12); color: var(--accent4); }
+  .t5 .topic-num { background: rgba(239,68,68,0.12); color: var(--accent5); }
+  .t6 .topic-num { background: rgba(0,194,255,0.12); color: var(--accent); }
+  .t7 .topic-num { background: rgba(124,58,237,0.12); color: #a78bfa; }
+  .t8 .topic-num { background: rgba(16,185,129,0.12); color: var(--accent3); }
+  .t9 .topic-num { background: rgba(245,158,11,0.12); color: var(--accent4); }
+  .t10 .topic-num { background: rgba(239,68,68,0.12); color: var(--accent5); }
+
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-dim);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media(max-width:600px){
+    .hero { padding: 40px 20px 36px; }
+    .main { padding: 30px 16px 60px; }
+    .topic-header { padding: 20px; }
+    .questions-section { padding: 20px; }
+    .q-answer { padding: 16px 18px 20px; }
+    .resource-strip { padding: 12px 20px; }
+    .nav { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">University Exam Prep with Ani</div>
+  <h1>DevOps Complete<br><span>Study Guide</span></h1>
+  <p>All questions from the official question bank — 2, 7 &amp; 15 mark answers — organized by broad topic with free YouTube resources.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">10</span><span class="stat-label">Broad Topics</span></div>
+    <div class="stat"><span class="stat-num">25</span><span class="stat-label">2-Mark Qs</span></div>
+    <div class="stat"><span class="stat-num">20</span><span class="stat-label">7-Mark Qs</span></div>
+    <div class="stat"><span class="stat-num">10</span><span class="stat-label">15-Mark Qs</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#t1">1. DevOps Fundamentals</a>
+  <a href="#t2">2. Version Control & Git</a>
+  <a href="#t3">3. CI/CD & Jenkins</a>
+  <a href="#t4">4. Deployment Strategies</a>
+  <a href="#t5">5. Infrastructure as Code</a>
+  <a href="#t6">6. Ansible</a>
+  <a href="#t7">7. Docker</a>
+  <a href="#t8">8. Kubernetes</a>
+  <a href="#t9">9. Monitoring & Cloud</a>
+  <a href="#t10">10. DevSecOps</a>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 1: DevOps Fundamentals -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t1" id="t1">
+  <div class="topic-header">
+    <div class="topic-num">01</div>
+    <div>
+      <h2>DevOps Fundamentals</h2>
+      <p>Introduction, culture, principles, CALMS framework, DevOps lifecycle, and evolution of software development</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=0yWAtQ6wYNM" target="_blank">DevOps Explained (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=UbtB4sMaaNM" target="_blank">DevOps In 5 Minutes (Simplilearn)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=j5Zsa_eOXeY" target="_blank">DevOps Full Course (freeCodeCamp)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q1. Define DevOps.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>DevOps</strong> is a cultural and technical movement that combines <strong>Development (Dev)</strong> and <strong>Operations (Ops)</strong> teams to shorten the software delivery lifecycle, improve deployment frequency, and ensure higher software quality through automation, collaboration, and continuous feedback.</div>
+        <p>It emphasizes breaking down silos between developers and operations teams so that software can be built, tested, and released faster and more reliably. DevOps is not merely a tool or technology — it is a <strong>philosophy and set of practices</strong>.</p>
+        <p><strong>Key goals:</strong> Faster delivery, fewer failures, quicker recovery, and improved collaboration.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q2. What are the limitations of traditional software development models?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>Traditional models like the <strong>Waterfall model</strong> have several key limitations:</p>
+        <ul>
+          <li><strong>Siloed teams:</strong> Dev and Ops work independently, causing miscommunication and blame culture.</li>
+          <li><strong>Long release cycles:</strong> Software is delivered months or years after development, making it slow to respond to market changes.</li>
+          <li><strong>Manual processes:</strong> Testing, deployment, and configuration are done manually, leading to human errors.</li>
+          <li><strong>Poor feedback loop:</strong> Bugs discovered late in production are expensive to fix.</li>
+          <li><strong>Inflexibility:</strong> Changes in requirements are hard to accommodate mid-cycle.</li>
+          <li><strong>"Works on my machine" problem:</strong> Environment inconsistencies between development and production.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q3. What is the CALMS framework?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>CALMS is a framework used to assess and guide DevOps adoption in an organization. It stands for:</p>
+        <ul>
+          <li><strong>C — Culture:</strong> Fostering collaboration, shared responsibility, and trust between Dev and Ops.</li>
+          <li><strong>A — Automation:</strong> Automating repetitive tasks like builds, tests, deployments.</li>
+          <li><strong>L — Lean:</strong> Eliminating waste, improving flow, focusing on customer value.</li>
+          <li><strong>M — Measurement:</strong> Tracking key metrics (deployment frequency, MTTR, change failure rate).</li>
+          <li><strong>S — Sharing:</strong> Open communication of knowledge, tools, and responsibilities.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q25. What is monitoring in DevOps?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Monitoring</strong> in DevOps refers to the continuous observation of application performance, system health, and infrastructure metrics to detect issues, ensure uptime, and improve reliability.</div>
+        <p>It includes tracking logs, metrics, traces, alerts, and dashboards. Popular tools include <strong>Prometheus, Grafana, Nagios, ELK Stack</strong>, and <strong>Datadog</strong>. Monitoring closes the feedback loop in the DevOps lifecycle.</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q1. Explain the evolution of software development and IT operations.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>1. Waterfall Era (1970s–1990s)</h4>
+        <p>Early software followed the <strong>Waterfall model</strong> — a sequential, phase-driven approach: Requirements → Design → Implementation → Testing → Deployment → Maintenance. Each phase had to be completed before the next began. While simple and structured, it was rigid and delivered software in 12–18 month cycles. By the time software reached users, requirements had often changed.</p>
+
+        <h4>2. Agile Revolution (2001–onwards)</h4>
+        <p>The <strong>Agile Manifesto (2001)</strong> introduced iterative development with short sprints (2–4 weeks). Teams focused on customer collaboration, working software, and responding to change. Agile fixed the development side but operations teams still deployed manually and maintained separate environments — creating a wall between Dev and Ops.</p>
+
+        <h4>3. DevOps Movement (2008–onwards)</h4>
+        <p>Patrick Debois coined the term <strong>DevOps</strong> in 2009 after the "Agile Infrastructure" talks. The idea: apply Agile and Lean principles to IT operations. Dev and Ops must collaborate. This led to continuous integration, delivery pipelines, and Infrastructure as Code.</p>
+
+        <h4>4. Cloud-Native and Modern DevOps</h4>
+        <p>With cloud platforms (AWS, Azure, GCP), containers (Docker), and orchestration (Kubernetes), DevOps evolved into cloud-native practices. Organizations now deploy hundreds of times per day (e.g., Amazon deploys every 11.7 seconds on average).</p>
+
+        <div class="diagram">Waterfall → Agile → DevOps → Cloud-Native DevOps
+  (Months)   (Weeks)   (Days)    (Minutes/Hours)</div>
+
+        <h4>Key Takeaway</h4>
+        <p>The evolution has been driven by the need for <strong>speed, reliability, and collaboration</strong>. DevOps emerged as the bridge between development velocity (Agile) and operational stability, resulting in continuous delivery of value to end users.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q2. Explain DevOps culture, principles, and practices.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>DevOps Culture</h4>
+        <p>DevOps is fundamentally a <strong>cultural change</strong>. It requires breaking down the "wall of confusion" between development and operations. Key cultural elements include:</p>
+        <ul>
+          <li><strong>Shared responsibility:</strong> Both Dev and Ops own the product end-to-end.</li>
+          <li><strong>Blameless post-mortems:</strong> Focus on fixing systems, not blaming individuals.</li>
+          <li><strong>Transparency:</strong> All teams have visibility into builds, deployments, and issues.</li>
+          <li><strong>Continuous learning:</strong> Encourage experimentation and learning from failures.</li>
+        </ul>
+
+        <h4>Core Principles</h4>
+        <ul>
+          <li><strong>Automation:</strong> Automate every repetitive task — builds, tests, deployments, infrastructure provisioning.</li>
+          <li><strong>Continuous Feedback:</strong> Fast feedback loops from testing, monitoring, and users enable rapid improvement.</li>
+          <li><strong>Collaboration:</strong> Dev, Ops, QA, and Security work together throughout the entire software lifecycle.</li>
+          <li><strong>Iterative Improvement:</strong> Small, frequent releases reduce risk and allow fast correction.</li>
+          <li><strong>Customer Focus:</strong> Delivering working software that meets user needs is the ultimate measure of success.</li>
+        </ul>
+
+        <h4>Core Practices</h4>
+        <ul>
+          <li><strong>Version Control:</strong> All code and infrastructure changes tracked in Git.</li>
+          <li><strong>CI/CD:</strong> Automated build, test, and deployment pipelines.</li>
+          <li><strong>Infrastructure as Code (IaC):</strong> Infrastructure managed through code (Ansible, Terraform).</li>
+          <li><strong>Monitoring and Observability:</strong> Continuous tracking of system health.</li>
+          <li><strong>Microservices:</strong> Small, independently deployable services.</li>
+          <li><strong>Containerization:</strong> Docker and Kubernetes for consistent environments.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q3. Describe the CALMS framework in DevOps.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>The <strong>CALMS framework</strong> was introduced by Damon Edwards and John Willis and is widely used to evaluate DevOps readiness and guide adoption.</p>
+        <h4>C — Culture</h4>
+        <p>Culture is the foundation of DevOps. Without cultural change, tools and processes cannot succeed. Organizations must cultivate <strong>trust, collaboration, and shared ownership</strong>. Teams should celebrate successes together and conduct blameless post-mortems when things go wrong.</p>
+        <h4>A — Automation</h4>
+        <p>Automation eliminates repetitive manual work. This includes CI/CD pipelines, automated testing, infrastructure provisioning (IaC), and deployment automation. Automation reduces errors, speeds up delivery, and frees engineers for higher-value work.</p>
+        <h4>L — Lean</h4>
+        <p>Lean principles from manufacturing (Toyota Production System) guide DevOps. The focus is on <strong>eliminating waste</strong> (waiting time, rework, manual handoffs), optimizing flow, and continuously improving processes. Work in progress (WIP) limits ensure teams don't become overwhelmed.</p>
+        <h4>M — Measurement</h4>
+        <p>DevOps teams track key metrics to understand and improve their performance. Key metrics (DORA metrics) include:</p>
+        <ul>
+          <li><strong>Deployment Frequency</strong></li>
+          <li><strong>Lead Time for Changes</strong></li>
+          <li><strong>Mean Time to Recovery (MTTR)</strong></li>
+          <li><strong>Change Failure Rate</strong></li>
+        </ul>
+        <h4>S — Sharing</h4>
+        <p>Sharing knowledge, tools, and experiences across teams prevents reinventing the wheel. Inner-source programs, wikis, post-mortem reports, and cross-team guilds are examples of sharing in practice.</p>
+        <div class="diagram">  C → Culture (People first)
+  A → Automation (Tools & pipelines)
+  L → Lean (Eliminate waste)
+  M → Measurement (Data-driven decisions)
+  S → Sharing (Collective knowledge)</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q4. Explain the DevOps lifecycle with suitable diagram.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>The DevOps lifecycle is an <strong>infinite loop</strong> of continuous processes that enables rapid, reliable software delivery. It consists of 8 phases:</p>
+        <div class="diagram">         ┌─────────────────────────────────────────┐
+         │         DevOps Infinity Loop             │
+         │                                          │
+  Plan → Code → Build → Test → Release → Deploy → Operate → Monitor
+    └──────────────────────────────────────────────┘
+                     (Continuous Feedback)</div>
+
+        <h4>Phase-by-Phase Explanation</h4>
+        <ul>
+          <li><strong>Plan:</strong> Define features, sprints, and tasks using tools like Jira, Trello.</li>
+          <li><strong>Code:</strong> Developers write code using IDEs, commit to Git/GitHub with branching strategies.</li>
+          <li><strong>Build:</strong> Source code is compiled/built automatically using Maven, Gradle, npm. Jenkins triggers builds on each commit.</li>
+          <li><strong>Test:</strong> Automated tests (unit, integration, regression) run via Selenium, JUnit, TestNG. Bugs are caught early.</li>
+          <li><strong>Release:</strong> The release candidate is approved and tagged. This involves merge to main branch and versioning.</li>
+          <li><strong>Deploy:</strong> Application is deployed to staging/production via CD pipelines. Tools: Jenkins, ArgoCD, Spinnaker.</li>
+          <li><strong>Operate:</strong> Operations team ensures infrastructure is running — using Ansible, Terraform, Kubernetes to manage resources.</li>
+          <li><strong>Monitor:</strong> System performance is continuously tracked using Prometheus, Grafana, ELK Stack. Alerts notify teams of issues.</li>
+        </ul>
+        <p>The cycle then repeats — insights from monitoring feed back into planning the next sprint, completing the <strong>continuous feedback loop</strong>.</p>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q1. Explain the DevOps lifecycle and DevOps toolchain in detail.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction</h4>
+        <p>DevOps is a continuous, collaborative approach to software development and delivery. It replaces the traditional siloed model with an integrated lifecycle where development and operations teams work together throughout the entire software delivery process. The DevOps lifecycle is represented as an <strong>infinite loop (∞)</strong> to signify its continuous, iterative nature.</p>
+
+        <h4>DevOps Lifecycle — 8 Phases</h4>
+        <div class="diagram">Plan → Code → Build → Test → Release → Deploy → Operate → Monitor → (back to Plan)</div>
+
+        <h4>1. Plan</h4>
+        <p>Teams collaborate to define project requirements, features, and sprint backlogs. Tools used include <strong>Jira, Confluence, Trello, Azure Boards</strong>. Agile methodologies (Scrum, Kanban) guide work breakdown. The goal is to align development with business needs.</p>
+
+        <h4>2. Code</h4>
+        <p>Developers write code on feature branches. Best practices include code reviews, pair programming, and following style guidelines. Tools: <strong>Git, GitHub, GitLab, VS Code, IntelliJ</strong>. Version control ensures traceability and rollback capability.</p>
+
+        <h4>3. Build</h4>
+        <p>Source code is compiled into executable artifacts (JAR, WAR, Docker image). Build tools like <strong>Maven, Gradle, npm, Make</strong> automate this. CI servers (Jenkins, GitHub Actions) trigger builds automatically on each commit or pull request.</p>
+
+        <h4>4. Test</h4>
+        <p>Automated testing is critical in DevOps. Types of testing include:</p>
+        <ul>
+          <li><strong>Unit Testing:</strong> Testing individual functions/methods (JUnit, pytest)</li>
+          <li><strong>Integration Testing:</strong> Testing components together</li>
+          <li><strong>Regression Testing:</strong> Ensuring new code doesn't break existing features</li>
+          <li><strong>Performance Testing:</strong> Load and stress testing (JMeter)</li>
+          <li><strong>Security Testing:</strong> SAST, DAST tools (SonarQube, OWASP ZAP)</li>
+        </ul>
+
+        <h4>5. Release</h4>
+        <p>The tested build is versioned and tagged for release. Release management ensures approvals, changelogs, and environment-specific configurations are in place. Tools: <strong>Jenkins, GitLab CI, Nexus, Artifactory</strong>.</p>
+
+        <h4>6. Deploy</h4>
+        <p>Deployment involves pushing the application to target environments (staging → production). Deployment strategies include Blue-Green, Canary, Rolling. Tools: <strong>Kubernetes, Helm, ArgoCD, Ansible</strong>. Zero-downtime deployments are a key goal.</p>
+
+        <h4>7. Operate</h4>
+        <p>Operations teams manage infrastructure reliability, scalability, and configuration. Infrastructure as Code (Terraform, Ansible) ensures consistency. Cloud platforms (AWS, Azure, GCP) and Kubernetes handle auto-scaling and self-healing.</p>
+
+        <h4>8. Monitor</h4>
+        <p>Continuous monitoring collects metrics, logs, and traces from running applications. This phase feeds insights back to the Plan stage, completing the loop. Tools: <strong>Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana), Datadog, Nagios</strong>.</p>
+
+        <h4>DevOps Toolchain</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Phase</th><th>Category</th><th>Popular Tools</th></tr>
+            <tr><td>Plan</td><td>Project Management</td><td>Jira, Trello, Confluence</td></tr>
+            <tr><td>Code</td><td>Version Control</td><td>Git, GitHub, GitLab, Bitbucket</td></tr>
+            <tr><td>Build</td><td>Build Automation</td><td>Maven, Gradle, npm, Make</td></tr>
+            <tr><td>Test</td><td>Testing</td><td>JUnit, Selenium, TestNG, JMeter</td></tr>
+            <tr><td>Release / CI</td><td>CI/CD</td><td>Jenkins, GitHub Actions, CircleCI</td></tr>
+            <tr><td>Deploy</td><td>Container Orchestration</td><td>Kubernetes, Docker, Helm</td></tr>
+            <tr><td>Operate</td><td>IaC / Config Mgmt</td><td>Terraform, Ansible, Chef, Puppet</td></tr>
+            <tr><td>Monitor</td><td>Observability</td><td>Prometheus, Grafana, ELK, Datadog</td></tr>
+          </table>
+        </div>
+
+        <h4>Benefits of the DevOps Lifecycle</h4>
+        <ul>
+          <li>Faster time-to-market for features</li>
+          <li>Reduced failure rate of new releases</li>
+          <li>Faster recovery from failures (lower MTTR)</li>
+          <li>Improved collaboration and team morale</li>
+          <li>Higher software quality through continuous testing</li>
+        </ul>
+
+        <h4>Conclusion</h4>
+        <p>The DevOps lifecycle and toolchain together form a comprehensive, automated ecosystem that enables organizations to deliver high-quality software continuously. Companies like Netflix, Amazon, and Google have proven that DevOps practices can dramatically improve both development velocity and operational stability.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 2: Version Control & Git -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t2" id="t2">
+  <div class="topic-header">
+    <div class="topic-num">02</div>
+    <div>
+      <h2>Version Control &amp; Git</h2>
+      <p>VCS concepts, Git architecture, commands, branching, and code collaboration (GitHub/GitLab/Bitbucket)</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=RGOj5yH7evk" target="_blank">Git & GitHub Crash Course (freeCodeCamp)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=HVsySz-h9r4" target="_blank">Git Tutorial for Beginners (Corey Schafer)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=3fUbBnN_H2c" target="_blank">Git Explained in 100 Seconds (Fireship)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q4. Define Version Control System (VCS).</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box">A <strong>Version Control System (VCS)</strong> is a software tool that tracks and manages changes to source code or any set of files over time, allowing multiple contributors to collaborate and enabling rollback to previous versions.</div>
+        <p>VCS maintains a history of every change, who made it, and when. It prevents code loss, enables collaboration, and supports parallel development through branching. Examples: <strong>Git (distributed)</strong>, SVN (centralized).</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q5. What is the difference between centralized and distributed version control?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aspect</th><th>Centralized VCS (CVCS)</th><th>Distributed VCS (DVCS)</th></tr>
+            <tr><td>Repository</td><td>Single central server</td><td>Every user has a full copy</td></tr>
+            <tr><td>Offline work</td><td>Not possible</td><td>Fully possible</td></tr>
+            <tr><td>Speed</td><td>Slower (server dependent)</td><td>Faster (local operations)</td></tr>
+            <tr><td>Failure risk</td><td>High (single point)</td><td>Low (distributed copies)</td></tr>
+            <tr><td>Examples</td><td>SVN, CVS, Perforce</td><td>Git, Mercurial</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q6. What is Git?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Git</strong> is a free, open-source <strong>Distributed Version Control System</strong> created by Linus Torvalds in 2005 for managing the Linux kernel source code.</div>
+        <p>Git allows developers to track file changes, collaborate on code, create branches for features, and merge changes efficiently. Every Git repository is a full copy of the entire project history. It is the most widely used VCS in the world, forming the backbone of platforms like GitHub, GitLab, and Bitbucket.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q7. Write the purpose of the git init command.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>The <code style="background:#1a2236;padding:2px 7px;border-radius:4px;color:#00c2ff;font-family:monospace;">git init</code> command <strong>initializes a new, empty Git repository</strong> in the current directory.</p>
+        <p>It creates a hidden <code style="background:#1a2236;padding:2px 7px;border-radius:4px;color:#00c2ff;font-family:monospace;">.git/</code> subdirectory that contains all the repository metadata — object store, HEAD reference, configuration, and index. After running <code>git init</code>, the directory becomes a Git repository capable of tracking file changes.</p>
+        <p><strong>Syntax:</strong> <code style="background:#1a2236;padding:2px 7px;border-radius:4px;color:#10b981;font-family:monospace;">git init [directory-name]</code></p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q8. What is branching in Git?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Branching</strong> in Git is the ability to create independent lines of development within the same repository. Each branch is a lightweight pointer to a specific commit.</div>
+        <p>Branches allow developers to work on features, bug fixes, or experiments in isolation without affecting the main codebase. Changes are later merged back. The default branch is called <strong>main</strong> (or master). Common strategy: <strong>main → develop → feature/bugfix branches</strong>.</p>
+        <div class="diagram">main:    A──B──────────F
+feature:      C──D──E──┘   (merged back)</div>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q5. Explain Git architecture and workflow.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Git Architecture — Three Areas</h4>
+        <p>Git organizes work across three logical areas:</p>
+        <div class="diagram">Working Directory → Staging Area (Index) → Local Repository → Remote Repository
+   (Untracked/Modified)   (git add)            (git commit)        (git push)</div>
+
+        <ul>
+          <li><strong>Working Directory:</strong> The local file system where you edit files. Files are either untracked (new) or tracked (modified, added, deleted).</li>
+          <li><strong>Staging Area (Index):</strong> A preparation zone. Files are added here with <code>git add</code> before committing. This allows selective commits.</li>
+          <li><strong>Local Repository (.git/):</strong> The committed snapshot history. Each commit has a unique SHA-1 hash. Contains objects: blobs (file content), trees (directories), commits, tags.</li>
+          <li><strong>Remote Repository:</strong> A hosted copy on GitHub/GitLab. Synced via <code>git push</code> and <code>git pull</code>.</li>
+        </ul>
+
+        <h4>Git Workflow</h4>
+        <ol>
+          <li>Clone or init a repository: <code>git clone &lt;url&gt;</code></li>
+          <li>Create a feature branch: <code>git checkout -b feature/login</code></li>
+          <li>Make changes and stage them: <code>git add .</code></li>
+          <li>Commit the changes: <code>git commit -m "Add login feature"</code></li>
+          <li>Push branch to remote: <code>git push origin feature/login</code></li>
+          <li>Open a Pull Request (PR) for code review</li>
+          <li>Merge into main after approval: <code>git merge feature/login</code></li>
+        </ol>
+
+        <h4>Git Object Model</h4>
+        <p>Git stores everything as objects: <strong>blob</strong> (file data), <strong>tree</strong> (directory structure), <strong>commit</strong> (snapshot with metadata and parent reference), and <strong>tag</strong> (named reference to a commit). Each object is content-addressed by its SHA-1 hash, making Git tamper-proof.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q6. Explain important Git commands used in version control.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="table-wrap">
+          <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td><code>git init</code></td><td>Initialize a new repo</td><td><code>git init myproject</code></td></tr>
+            <tr><td><code>git clone</code></td><td>Clone a remote repo locally</td><td><code>git clone https://github.com/user/repo.git</code></td></tr>
+            <tr><td><code>git status</code></td><td>Show working tree status</td><td><code>git status</code></td></tr>
+            <tr><td><code>git add</code></td><td>Stage files for commit</td><td><code>git add . </code> or <code>git add file.txt</code></td></tr>
+            <tr><td><code>git commit</code></td><td>Save staged changes with a message</td><td><code>git commit -m "Initial commit"</code></td></tr>
+            <tr><td><code>git push</code></td><td>Upload local commits to remote</td><td><code>git push origin main</code></td></tr>
+            <tr><td><code>git pull</code></td><td>Fetch + merge from remote</td><td><code>git pull origin main</code></td></tr>
+            <tr><td><code>git branch</code></td><td>List / create branches</td><td><code>git branch feature/auth</code></td></tr>
+            <tr><td><code>git checkout</code></td><td>Switch branches or restore files</td><td><code>git checkout -b new-branch</code></td></tr>
+            <tr><td><code>git merge</code></td><td>Merge a branch into current</td><td><code>git merge feature/auth</code></td></tr>
+            <tr><td><code>git log</code></td><td>Show commit history</td><td><code>git log --oneline</code></td></tr>
+            <tr><td><code>git revert</code></td><td>Undo a commit safely</td><td><code>git revert HEAD</code></td></tr>
+            <tr><td><code>git stash</code></td><td>Temporarily save uncommitted changes</td><td><code>git stash pop</code></td></tr>
+            <tr><td><code>git rebase</code></td><td>Reapply commits on another base</td><td><code>git rebase main</code></td></tr>
+            <tr><td><code>git diff</code></td><td>Show unstaged differences</td><td><code>git diff HEAD</code></td></tr>
+            <tr><td><code>git tag</code></td><td>Create named release tags</td><td><code>git tag v1.0.0</code></td></tr>
+          </table>
+        </div>
+        <p><strong>Key insight:</strong> Git commands operate on one of three areas — working directory, staging area, or repository. Understanding which area a command affects is fundamental to mastering Git.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q7. Describe code collaboration using GitHub, GitLab, or Bitbucket.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>What are Git Hosting Platforms?</h4>
+        <p>GitHub, GitLab, and Bitbucket are web-based platforms that host Git repositories and provide collaboration features like pull requests, issue tracking, code review, wikis, and CI/CD integrations.</p>
+
+        <h4>GitHub</h4>
+        <p>The most popular platform (acquired by Microsoft in 2018). Key features: <strong>Pull Requests</strong> for code review, <strong>GitHub Actions</strong> for CI/CD, <strong>GitHub Pages</strong> for static sites, and a large open-source community. Ideal for open-source projects.</p>
+
+        <h4>GitLab</h4>
+        <p>A complete DevOps platform with built-in CI/CD (GitLab CI), container registry, security scanning, and Kubernetes integration. Can be self-hosted (on-premise). Ideal for enterprises needing an all-in-one DevOps solution.</p>
+
+        <h4>Bitbucket</h4>
+        <p>Atlassian's platform, deeply integrated with <strong>Jira and Confluence</strong>. Supports Git and (previously) Mercurial. Bitbucket Pipelines provides built-in CI/CD. Preferred by teams already using the Atlassian ecosystem.</p>
+
+        <h4>Collaboration Workflow</h4>
+        <ol>
+          <li><strong>Fork</strong> or clone the repository</li>
+          <li>Create a <strong>feature branch</strong>: <code>git checkout -b feature/xyz</code></li>
+          <li>Commit and push changes to your branch</li>
+          <li>Open a <strong>Pull Request / Merge Request</strong> — describe changes, tag reviewers</li>
+          <li>Team members review code, leave comments, request changes</li>
+          <li>Once approved, the branch is <strong>merged</strong> into main</li>
+          <li>Branch is deleted; CI/CD pipeline automatically deploys the change</li>
+        </ol>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>GitHub</th><th>GitLab</th><th>Bitbucket</th></tr>
+            <tr><td>CI/CD</td><td>GitHub Actions</td><td>GitLab CI/CD</td><td>Bitbucket Pipelines</td></tr>
+            <tr><td>Self-hosted</td><td>GitHub Enterprise</td><td>Yes (free)</td><td>Bitbucket Server</td></tr>
+            <tr><td>Best for</td><td>Open source</td><td>Enterprise DevOps</td><td>Atlassian teams</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q2. Discuss the role of version control systems in DevOps and explain Git workflow.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Role of VCS in DevOps</h4>
+        <p>Version Control Systems are the <strong>foundation of DevOps</strong>. Every DevOps practice — CI/CD, Infrastructure as Code, Continuous Testing — depends on VCS. Without VCS, teams cannot collaborate, track changes, or automate deployments reliably.</p>
+
+        <p>Key roles VCS plays in DevOps:</p>
+        <ul>
+          <li><strong>Single Source of Truth:</strong> All code, configuration, and infrastructure definitions live in version control.</li>
+          <li><strong>CI/CD Trigger:</strong> Every commit to a VCS triggers automated pipelines (build, test, deploy).</li>
+          <li><strong>Rollback:</strong> If a deployment fails, teams can revert to the last stable commit instantly.</li>
+          <li><strong>Audit Trail:</strong> Every change is documented with who, what, and when — essential for compliance.</li>
+          <li><strong>Branching Strategies:</strong> Enable parallel development of features without breaking the main branch.</li>
+          <li><strong>Code Review:</strong> Pull requests enforce peer review before code merges, improving quality.</li>
+        </ul>
+
+        <h4>Git Branching Strategies</h4>
+        <p>Different teams use different branching strategies depending on their deployment frequency:</p>
+        <ul>
+          <li><strong>Git Flow:</strong> main → develop → feature/release/hotfix branches. Suitable for versioned software with scheduled releases.</li>
+          <li><strong>GitHub Flow:</strong> main + short-lived feature branches. Merge via PR. Suitable for continuous deployment.</li>
+          <li><strong>Trunk-Based Development:</strong> Everyone commits to main (trunk) with feature flags. Enables maximum CI.</li>
+        </ul>
+
+        <div class="diagram">Git Flow:
+main:    ──A──────────────────────────E──
+develop: ────B──────────D────────────/
+feature:      ──C──────/  
+hotfix:                    ──────────/
+
+GitHub Flow:
+main:         ──A──────────B────────C──
+feature:            ──X──/    ──Y──/</div>
+
+        <h4>Complete Git Workflow in DevOps</h4>
+        <ol>
+          <li><strong>Repository Setup:</strong> <code>git init</code> or <code>git clone</code> to start. Configure user: <code>git config --global user.name "Name"</code></li>
+          <li><strong>Branch from main:</strong> <code>git checkout -b feature/user-auth</code></li>
+          <li><strong>Develop and stage:</strong> Edit files, then <code>git add .</code></li>
+          <li><strong>Commit with message:</strong> <code>git commit -m "feat: Add JWT authentication"</code></li>
+          <li><strong>Push branch:</strong> <code>git push origin feature/user-auth</code></li>
+          <li><strong>Pull Request:</strong> Open PR on GitHub/GitLab. Assign reviewers.</li>
+          <li><strong>CI Pipeline triggers:</strong> Automated tests run on the PR branch.</li>
+          <li><strong>Code Review:</strong> Reviewers comment, request changes, or approve.</li>
+          <li><strong>Merge:</strong> <code>git merge feature/user-auth</code> into main after approval.</li>
+          <li><strong>CD Pipeline triggers:</strong> Merged code is deployed automatically to production.</li>
+          <li><strong>Tag release:</strong> <code>git tag v2.1.0</code> for versioning.</li>
+        </ol>
+
+        <h4>Important Git Concepts for DevOps</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Concept</th><th>Relevance in DevOps</th></tr>
+            <tr><td>Commit SHA</td><td>Immutable identifier for deployments; enables exact version pinning</td></tr>
+            <tr><td>.gitignore</td><td>Prevents committing secrets, binaries, or environment files</td></tr>
+            <tr><td>Git hooks</td><td>Pre-commit hooks run linters/tests locally before code is committed</td></tr>
+            <tr><td>Submodules</td><td>Manage shared libraries across multiple repos</td></tr>
+            <tr><td>Git LFS</td><td>Handle large binary files (models, images) without bloating history</td></tr>
+          </table>
+        </div>
+
+        <h4>Conclusion</h4>
+        <p>VCS — specifically Git — is not just a "source code backup" in DevOps. It is the central nervous system of the entire software delivery pipeline. Every automated process, every deployment, and every collaboration flows through it. Mastery of Git and its workflows is therefore a fundamental prerequisite for any DevOps practitioner.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 3: CI/CD & Jenkins -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t3" id="t3">
+  <div class="topic-header">
+    <div class="topic-num">03</div>
+    <div>
+      <h2>CI/CD &amp; Jenkins</h2>
+      <p>Continuous Integration, Continuous Delivery, Continuous Deployment, build automation, Jenkins architecture, pipelines, and Git integration</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=scEDHsr3APg" target="_blank">Jenkins Full Course (Simplilearn)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=LFDrDnKPOTg" target="_blank">Jenkins Tutorial (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=6YZvp2GwT0A" target="_blank">CI/CD Pipeline Explained (Fireship)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q9. What is Continuous Integration (CI)?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Continuous Integration (CI)</strong> is a DevOps practice where developers frequently merge their code changes into a shared repository (multiple times per day), and each merge triggers an automated build and test process.</div>
+        <p>The goal is to detect integration errors quickly. If a build or test fails, the team is alerted immediately. CI ensures that the codebase is always in a testable, working state. Key tools: <strong>Jenkins, GitHub Actions, CircleCI, Travis CI</strong>.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q10. Define Continuous Delivery.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Continuous Delivery (CD)</strong> is a practice where code changes are automatically built, tested, and prepared for release to production after passing all automated tests. The actual release to production requires a <strong>manual approval step</strong>.</div>
+        <p>It ensures the software can be deployed at any time with confidence. The difference from Continuous Deployment: in CD, a human clicks the deploy button; in Continuous Deployment, it happens fully automatically.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q11. What is Jenkins?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Jenkins</strong> is an open-source, Java-based automation server used to implement CI/CD pipelines. It automates the building, testing, and deployment of applications.</div>
+        <p>Jenkins supports 1800+ plugins for integrating with virtually any tool in the DevOps ecosystem (Git, Docker, Maven, Kubernetes, AWS, etc.). It can be configured using a <strong>Jenkinsfile</strong> (Pipeline as Code) or through its web UI. Originally called Hudson, it was forked to Jenkins in 2011.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q12. What is build automation?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Build automation</strong> is the process of automatically compiling source code, running tests, packaging binaries, and generating deployment artifacts without manual intervention.</div>
+        <p>It ensures consistent, repeatable builds and eliminates the "it builds on my machine" problem. Build automation tools handle dependency resolution, compilation order, and artifact creation. Examples: <strong>Maven, Gradle</strong> (Java), <strong>npm</strong> (JavaScript), <strong>Make</strong> (C/C++).</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q13. Name any two build tools used in DevOps.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <ul>
+          <li><strong>Maven:</strong> A Java-based build tool that uses XML (pom.xml) to manage project structure, dependencies, and build lifecycle. Follows "convention over configuration."</li>
+          <li><strong>Gradle:</strong> A modern, flexible build tool that uses Groovy/Kotlin DSL (build.gradle). Faster than Maven due to incremental builds and build caching. Used by Android projects.</li>
+        </ul>
+        <p>Other notable build tools: <strong>npm</strong> (Node.js), <strong>Make</strong>, <strong>Ant</strong>, <strong>Bazel</strong>.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q14. What is Continuous Testing?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Continuous Testing</strong> is the practice of running automated tests at every stage of the CI/CD pipeline to provide immediate feedback on business risk and software quality throughout the delivery process.</div>
+        <p>It includes unit tests, integration tests, regression tests, performance tests, and security scans — all executed automatically on every code change. Tools: <strong>JUnit, Selenium, TestNG, JMeter, SonarQube</strong>. It shifts testing "left" (earlier in the pipeline), reducing the cost of bug fixes.</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q8. Explain the concept and benefits of Continuous Integration.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Concept of CI</h4>
+        <p>Continuous Integration was popularized by Martin Fowler and Kent Beck. The core idea: developers integrate code frequently (at least once per day), and each integration is verified by an automated build and test suite. The goal is to find and fix integration bugs early, when they are cheapest to correct.</p>
+
+        <h4>How CI Works</h4>
+        <div class="diagram">Developer pushes code to Git
+         ↓
+CI Server detects change (webhook/polling)
+         ↓
+Fetch latest code → Compile/Build
+         ↓
+Run automated tests (Unit, Integration)
+         ↓
+Code analysis (SonarQube, linting)
+         ↓
+Build artifact (JAR, Docker image)
+         ↓
+Notify team (Pass ✓ or Fail ✗)</div>
+
+        <h4>Key Practices of CI</h4>
+        <ul>
+          <li>Maintain a single source repository</li>
+          <li>Automate the build process</li>
+          <li>Make the build self-testing</li>
+          <li>Every commit should trigger a build</li>
+          <li>Fix broken builds immediately — the "stop the line" mentality</li>
+          <li>Keep the build fast (under 10 minutes)</li>
+          <li>Test in a production-like environment</li>
+        </ul>
+
+        <h4>Benefits of CI</h4>
+        <ul>
+          <li><strong>Early bug detection:</strong> Bugs caught in minutes, not weeks.</li>
+          <li><strong>Reduced integration risk:</strong> Small, frequent merges are easier to manage than large, infrequent merges.</li>
+          <li><strong>Consistent build process:</strong> Same process every time, regardless of developer environment.</li>
+          <li><strong>Faster feedback:</strong> Developers know within minutes if their change broke something.</li>
+          <li><strong>Increased confidence:</strong> Always have a deployable version of the software.</li>
+          <li><strong>Better code quality:</strong> Automated code analysis (SonarQube) enforces standards.</li>
+          <li><strong>Reduced manual work:</strong> Automation replaces repetitive build and test tasks.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q9. Explain Jenkins architecture.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Jenkins Architecture Overview</h4>
+        <p>Jenkins follows a <strong>Master-Agent (Master-Slave) architecture</strong> that enables distributed builds across multiple machines.</p>
+        <div class="diagram">        ┌────────────────────────────┐
+        │        JENKINS MASTER       │
+        │  - Web UI (port 8080)       │
+        │  - Job Scheduling           │
+        │  - Plugin Management        │
+        │  - Build Queue              │
+        └──────┬──────────┬───────────┘
+               │          │  (SSH/JNLP)
+        ┌──────▼──┐   ┌───▼──────┐
+        │ AGENT 1 │   │ AGENT 2  │
+        │ Linux   │   │ Windows  │
+        │ (Build) │   │ (Build)  │
+        └─────────┘   └──────────┘</div>
+
+        <h4>Jenkins Master</h4>
+        <p>The master is the central control node. Its responsibilities include:</p>
+        <ul>
+          <li>Hosting the Jenkins web UI (default: port 8080)</li>
+          <li>Scheduling build jobs and distributing them to agents</li>
+          <li>Monitoring agent health</li>
+          <li>Managing plugins, users, and security</li>
+          <li>Storing job configurations and build history</li>
+        </ul>
+
+        <h4>Jenkins Agent (Slave)</h4>
+        <p>Agents are machines that execute build jobs delegated by the master. They can run on Linux, Windows, or macOS. Agents connect to the master via:</p>
+        <ul>
+          <li><strong>SSH:</strong> Master connects to agent using SSH credentials</li>
+          <li><strong>JNLP (Java Web Start):</strong> Agent initiates connection to master</li>
+        </ul>
+
+        <h4>Jenkins Pipeline</h4>
+        <p>Jenkins Pipelines define the CI/CD process as code in a <strong>Jenkinsfile</strong>. Two types:</p>
+        <ul>
+          <li><strong>Declarative Pipeline:</strong> Structured, easier to read and write (recommended)</li>
+          <li><strong>Scripted Pipeline:</strong> Uses Groovy scripting for complex logic</li>
+        </ul>
+        <div class="diagram">pipeline {
+  agent any
+  stages {
+    stage('Build') { steps { sh 'mvn package' } }
+    stage('Test')  { steps { sh 'mvn test' } }
+    stage('Deploy'){ steps { sh './deploy.sh' } }
+  }
+}</div>
+
+        <h4>Key Components</h4>
+        <ul>
+          <li><strong>Jobs/Projects:</strong> Freestyle, Pipeline, Multi-branch Pipeline</li>
+          <li><strong>Plugins:</strong> 1800+ plugins for Git, Docker, Slack, AWS, etc.</li>
+          <li><strong>Build Queue:</strong> Manages jobs waiting for available agents</li>
+          <li><strong>Workspace:</strong> Directory where each job runs its build</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q10. Explain the integration of Git with Jenkins.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Why Integrate Git with Jenkins?</h4>
+        <p>Integrating Git with Jenkins enables <strong>automated CI/CD pipelines</strong>: every code push to Git automatically triggers a Jenkins build, test, and deploy process — eliminating manual intervention and enabling rapid feedback.</p>
+
+        <h4>Integration Methods</h4>
+        <ul>
+          <li><strong>Webhook (Recommended):</strong> GitHub/GitLab sends an HTTP POST to Jenkins whenever code is pushed. Jenkins immediately triggers the job. Near-instant response.</li>
+          <li><strong>Polling:</strong> Jenkins periodically checks the Git repo for changes (e.g., every 5 minutes). Less efficient than webhooks.</li>
+        </ul>
+
+        <h4>Step-by-Step Integration</h4>
+        <ol>
+          <li>Install the <strong>Git Plugin</strong> in Jenkins (Manage Jenkins → Plugins).</li>
+          <li>Create a new Jenkins Pipeline or Freestyle job.</li>
+          <li>In "Source Code Management," select <strong>Git</strong> and enter the repository URL.</li>
+          <li>Add Git credentials (username/password or SSH key).</li>
+          <li>Specify the branch to build (e.g., <code>*/main</code>).</li>
+          <li>In "Build Triggers," select <strong>"GitHub hook trigger for GITScm polling"</strong>.</li>
+          <li>In GitHub repo: Settings → Webhooks → Add webhook → Jenkins URL + <code>/github-webhook/</code></li>
+          <li>Write a <strong>Jenkinsfile</strong> at the root of the Git repo defining the pipeline stages.</li>
+        </ol>
+
+        <h4>Complete Workflow</h4>
+        <div class="diagram">Developer pushes code to GitHub
+         ↓
+GitHub fires webhook to Jenkins (port 8080)
+         ↓
+Jenkins fetches latest code (git pull)
+         ↓
+Runs pipeline: Build → Test → Deploy
+         ↓
+Sends notification (Slack/Email) on success/failure</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q11. Compare Continuous Delivery and Continuous Deployment.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Overview</h4>
+        <p>Both Continuous Delivery and Continuous Deployment extend CI by automating the release process further. They differ in the final step — human vs. automatic deployment to production.</p>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aspect</th><th>Continuous Delivery</th><th>Continuous Deployment</th></tr>
+            <tr><td>Definition</td><td>Code is always ready to deploy; production release requires <strong>manual approval</strong></td><td>Every passing build is <strong>automatically deployed</strong> to production</td></tr>
+            <tr><td>Human involvement</td><td>Required for final deploy decision</td><td>No human intervention needed</td></tr>
+            <tr><td>Risk</td><td>Lower — business can control release timing</td><td>Higher — bugs can reach users immediately</td></tr>
+            <tr><td>Release frequency</td><td>On demand (daily, weekly, as needed)</td><td>Multiple times per day automatically</td></tr>
+            <tr><td>Testing requirement</td><td>Comprehensive automated tests required</td><td>Even more rigorous automated test coverage needed</td></tr>
+            <tr><td>Best for</td><td>Regulated industries (banking, healthcare)</td><td>SaaS, web apps, startups</td></tr>
+            <tr><td>Examples</td><td>Most enterprise CI/CD pipelines</td><td>Netflix, Amazon, Etsy</td></tr>
+          </table>
+        </div>
+
+        <div class="diagram">CI → CD (Delivery):
+Code → Build → Test → [STAGING] ──human approval──→ PRODUCTION
+
+CI → CD (Deployment):
+Code → Build → Test → [STAGING] ──auto──→ PRODUCTION</div>
+
+        <h4>Key Insight</h4>
+        <p>All Continuous Deployment is Continuous Delivery, but not all Continuous Delivery is Continuous Deployment. Both require a robust CI pipeline and comprehensive automated test coverage as a prerequisite.</p>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q3. Explain Continuous Integration and Continuous Delivery in detail with examples.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction</h4>
+        <p>Continuous Integration (CI) and Continuous Delivery (CD) are two foundational practices in DevOps that together form the <strong>CI/CD pipeline</strong> — the backbone of modern software delivery. They automate the process of integrating code changes, testing them thoroughly, and preparing or deploying them to production environments.</p>
+
+        <h4>Continuous Integration (CI) — In Detail</h4>
+        <p>CI is based on the principle that developers should integrate their code changes frequently — multiple times per day — into a shared repository. Each integration triggers an automated build and test sequence.</p>
+
+        <p><strong>CI Pipeline Stages:</strong></p>
+        <ol>
+          <li><strong>Source:</strong> Developer commits code to Git branch.</li>
+          <li><strong>Build:</strong> Jenkins/GitHub Actions compiles the code, resolves dependencies, creates artifacts.</li>
+          <li><strong>Unit Test:</strong> Automated unit tests validate individual functions (JUnit, pytest).</li>
+          <li><strong>Code Analysis:</strong> Static code analysis with SonarQube checks for code smells, vulnerabilities, coverage.</li>
+          <li><strong>Integration Test:</strong> Components tested together to verify they work as a system.</li>
+          <li><strong>Artifact Creation:</strong> Successful builds produce a deployable artifact (JAR, Docker image) stored in Nexus/Artifactory.</li>
+          <li><strong>Notification:</strong> Build results sent to Slack/email.</li>
+        </ol>
+
+        <p><strong>Example (Java + Jenkins + Maven):</strong></p>
+        <div class="diagram">// Jenkinsfile
+pipeline {
+  agent any
+  tools { maven 'Maven 3.8' }
+  stages {
+    stage('Checkout') { steps { git 'https://github.com/myrepo.git' } }
+    stage('Build')    { steps { sh 'mvn clean package -DskipTests' } }
+    stage('Test')     { steps { sh 'mvn test' } }
+    stage('Analyze')  { steps { withSonarQubeEnv('SonarQube') { sh 'mvn sonar:sonar' } } }
+    stage('Archive')  { steps { archiveArtifacts 'target/*.jar' } }
+  }
+  post {
+    success { slackSend message: "Build SUCCESS: ${env.JOB_NAME}" }
+    failure { slackSend message: "Build FAILED: ${env.JOB_NAME}" }
+  }
+}</div>
+
+        <h4>Continuous Delivery (CD) — In Detail</h4>
+        <p>CD extends CI by automating the delivery of tested artifacts to staging and pre-production environments, making the software <strong>always deployable</strong>. A manual approval gate controls the final push to production.</p>
+
+        <p><strong>CD Pipeline Stages:</strong></p>
+        <ol>
+          <li><strong>Deploy to Staging:</strong> Successful CI artifact is deployed to a staging environment that mirrors production.</li>
+          <li><strong>Smoke Tests:</strong> Basic tests verify the staging deployment is working.</li>
+          <li><strong>User Acceptance Testing (UAT):</strong> Product owner validates features against requirements.</li>
+          <li><strong>Performance Testing:</strong> Load tests (JMeter) verify the app handles expected traffic.</li>
+          <li><strong>Security Scanning:</strong> DAST tools (OWASP ZAP) scan the running application for vulnerabilities.</li>
+          <li><strong>Manual Approval Gate:</strong> A release manager reviews results and approves production release.</li>
+          <li><strong>Deploy to Production:</strong> One-click deployment of approved artifact.</li>
+        </ol>
+
+        <h4>Continuous Deployment — Fully Automated</h4>
+        <p>In Continuous Deployment, the manual approval gate is removed. Every passing build is automatically deployed to production. This requires:</p>
+        <ul>
+          <li>Extremely high test coverage (80–90%+)</li>
+          <li>Feature flags to control feature rollout independently of deployment</li>
+          <li>Robust monitoring and automatic rollback on failure</li>
+          <li>A mature DevOps culture with blameless post-mortems</li>
+        </ul>
+
+        <h4>CI/CD Tools Comparison</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Tool</th><th>Type</th><th>Key Feature</th></tr>
+            <tr><td>Jenkins</td><td>Self-hosted CI/CD</td><td>1800+ plugins, highly customizable</td></tr>
+            <tr><td>GitHub Actions</td><td>Cloud CI/CD</td><td>Native GitHub integration, YAML workflows</td></tr>
+            <tr><td>GitLab CI/CD</td><td>Integrated platform</td><td>Built-in registry, environments, security scans</td></tr>
+            <tr><td>CircleCI</td><td>Cloud CI/CD</td><td>Fast parallel builds, orbs (reusable configs)</td></tr>
+            <tr><td>ArgoCD</td><td>GitOps CD</td><td>Kubernetes-native, declarative deployments</td></tr>
+          </table>
+        </div>
+
+        <h4>Real-World Example</h4>
+        <p>Amazon deploys code every 11.7 seconds on average. Netflix deploys thousands of times per week. These companies use CI/CD pipelines with extensive automation, feature flags, canary deployments, and real-time monitoring to achieve this velocity while maintaining high availability (99.99%+ uptime).</p>
+
+        <h4>Benefits Summary</h4>
+        <ul>
+          <li>Reduced time from code commit to production (hours vs. weeks)</li>
+          <li>Lower deployment risk through small, incremental changes</li>
+          <li>Faster bug detection and remediation</li>
+          <li>Consistent, repeatable deployment process</li>
+          <li>Higher developer productivity and satisfaction</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q4. Discuss Jenkins architecture, installation, and pipeline implementation.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Jenkins Overview</h4>
+        <p>Jenkins is the most widely used open-source CI/CD automation server. Written in Java, it runs as a standalone server and integrates with virtually every tool in the DevOps ecosystem through its plugin ecosystem of 1800+ plugins.</p>
+
+        <h4>Jenkins Architecture</h4>
+        <div class="diagram">          ┌──────────────────────────────────────┐
+          │            JENKINS MASTER              │
+          │   ┌──────────┐    ┌────────────────┐  │
+          │   │  Web UI  │    │  Job Scheduler │  │
+          │   │ (8080)   │    │  Build Queue   │  │
+          │   └──────────┘    └────────────────┘  │
+          │   ┌──────────┐    ┌────────────────┐  │
+          │   │ Plugins  │    │ Config/Storage │  │
+          │   └──────────┘    └────────────────┘  │
+          └───────┬──────────────────┬─────────────┘
+                  │ SSH/JNLP         │ SSH/JNLP
+        ┌─────────▼──┐        ┌──────▼───────┐
+        │  AGENT 1   │        │   AGENT 2    │
+        │  Linux x64 │        │  Windows     │
+        │  Java 17   │        │  .NET Build  │
+        └────────────┘        └──────────────┘</div>
+
+        <h4>Master Responsibilities</h4>
+        <ul>
+          <li>Hosts the web interface and REST API</li>
+          <li>Schedules jobs and dispatches them to agents</li>
+          <li>Manages user authentication and authorization</li>
+          <li>Stores all job configurations in XML files</li>
+          <li>Manages plugins and their lifecycle</li>
+        </ul>
+
+        <h4>Agent Responsibilities</h4>
+        <ul>
+          <li>Execute build tasks assigned by the master</li>
+          <li>Report build results back to master</li>
+          <li>Can be static (dedicated machines) or dynamic (cloud/Kubernetes agents spun up on demand)</li>
+        </ul>
+
+        <h4>Jenkins Installation (on Ubuntu)</h4>
+        <div class="diagram">sudo apt update
+sudo apt install openjdk-17-jdk -y
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update && sudo apt install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+# Access: http://localhost:8080</div>
+
+        <h4>Jenkins Pipeline — Declarative Syntax</h4>
+        <p>A <strong>Jenkinsfile</strong> is a text file stored in the root of the Git repo that defines the CI/CD pipeline as code:</p>
+        <div class="diagram">pipeline {
+  agent { label 'linux-agent' }
+  
+  environment {
+    DOCKER_IMAGE = "myapp:${BUILD_NUMBER}"
+    REGISTRY = "registry.example.com"
+  }
+  
+  stages {
+    stage('Checkout') {
+      steps { git branch: 'main', url: 'https://github.com/org/repo.git' }
+    }
+    stage('Build') {
+      steps { sh 'mvn clean package -DskipTests' }
+    }
+    stage('Test') {
+      parallel {
+        stage('Unit Tests')       { steps { sh 'mvn test' } }
+        stage('Integration Tests'){ steps { sh 'mvn verify -P integration' } }
+      }
+    }
+    stage('Code Quality') {
+      steps {
+        withSonarQubeEnv('SonarQube') { sh 'mvn sonar:sonar' }
+        waitForQualityGate abortPipeline: true
+      }
+    }
+    stage('Docker Build') {
+      steps { sh "docker build -t ${DOCKER_IMAGE} ." }
+    }
+    stage('Push to Registry') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-creds', ...)]) {
+          sh "docker push ${REGISTRY}/${DOCKER_IMAGE}"
+        }
+      }
+    }
+    stage('Deploy to Staging') {
+      steps { sh "kubectl set image deployment/myapp app=${REGISTRY}/${DOCKER_IMAGE}" }
+    }
+    stage('Deploy to Production') {
+      input { message 'Approve production release?' }
+      steps { sh './deploy-prod.sh' }
+    }
+  }
+  post {
+    success { slackSend color: 'good', message: "Pipeline SUCCESS: ${JOB_NAME}" }
+    failure { slackSend color: 'danger', message: "Pipeline FAILED: ${JOB_NAME}" }
+    always  { junit 'target/surefire-reports/*.xml' }
+  }
+}</div>
+
+        <h4>Jenkins Pipeline Types</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Type</th><th>Description</th><th>Use Case</th></tr>
+            <tr><td>Freestyle Job</td><td>GUI-configured, simple jobs</td><td>Simple scripts, beginners</td></tr>
+            <tr><td>Pipeline</td><td>Single Jenkinsfile, code-defined</td><td>Single branch pipelines</td></tr>
+            <tr><td>Multi-branch Pipeline</td><td>Automatically creates pipeline per branch</td><td>Feature branch CI</td></tr>
+            <tr><td>Organization Folder</td><td>Scans entire GitHub org</td><td>Enterprise multi-repo CI</td></tr>
+          </table>
+        </div>
+
+        <h4>Key Plugins for CI/CD</h4>
+        <ul>
+          <li><strong>Git Plugin:</strong> Source code checkout from Git repositories</li>
+          <li><strong>Pipeline Plugin:</strong> Enables Jenkinsfile-based pipelines</li>
+          <li><strong>Docker Plugin:</strong> Build and run Docker containers</li>
+          <li><strong>SonarQube Plugin:</strong> Code quality analysis integration</li>
+          <li><strong>Slack Notification:</strong> Build alerts to Slack channels</li>
+          <li><strong>Blue Ocean:</strong> Modern, visual pipeline UI</li>
+          <li><strong>Kubernetes Plugin:</strong> Dynamic agent provisioning on K8s</li>
+        </ul>
+
+        <h4>Conclusion</h4>
+        <p>Jenkins provides a complete, extensible platform for implementing CI/CD in any organization. Its master-agent architecture enables distributed builds, its plugin ecosystem allows integration with virtually any tool, and Pipeline as Code (Jenkinsfile) makes the entire delivery process version-controlled, auditable, and reproducible.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 4: Deployment Strategies -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t4" id="t4">
+  <div class="topic-header">
+    <div class="topic-num">04</div>
+    <div>
+      <h2>Deployment Strategies</h2>
+      <p>Blue-Green, Canary, and Rolling Deployment strategies for zero-downtime releases</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=AWVTKBUnoIg" target="_blank">Deployment Strategies Explained (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=O6O2KCbOhqM" target="_blank">Blue Green & Canary Deployments (KodeKloud)</a>
+  </div>
+  <div class="questions-section">
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q12. Explain Blue-Green deployment strategy.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>What is Blue-Green Deployment?</h4>
+        <p>Blue-Green Deployment is a release strategy that maintains <strong>two identical production environments</strong> — called Blue and Green — to achieve zero-downtime deployments and instant rollback capability.</p>
+
+        <div class="diagram">                    ┌──────────────────┐
+   Users ──────────▶│   Load Balancer   │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┴──────────────┐
+              │                              │
+    ┌─────────▼──────────┐      ┌────────────▼───────────┐
+    │    BLUE (v1.0)      │      │    GREEN (v2.0)         │
+    │   [LIVE - Active]   │      │  [Staging - Idle]       │
+    └─────────────────────┘      └────────────────────────┘
+    
+    After switch:
+              ┌──────────────────────────────┐
+              │        Switch traffic         │
+              └──────────────────────────────┘
+    ┌─────────────────────┐      ┌────────────────────────┐
+    │    BLUE (v1.0)      │      │    GREEN (v2.0)         │
+    │   [Idle - Standby]  │      │  [LIVE - Active]        │
+    └─────────────────────┘      └────────────────────────┘</div>
+
+        <h4>How It Works</h4>
+        <ol>
+          <li>The <strong>Blue environment</strong> runs the current live version (v1.0).</li>
+          <li>The <strong>Green environment</strong> is deployed with the new version (v2.0) and tested.</li>
+          <li>Once Green passes all tests, the <strong>load balancer is switched</strong> to route all traffic to Green.</li>
+          <li>Blue becomes idle (standby). If Green fails, switch traffic back to Blue instantly — <strong>instant rollback</strong>.</li>
+          <li>When Green is stable, Blue is updated for the next release.</li>
+        </ol>
+
+        <h4>Advantages</h4>
+        <ul>
+          <li><strong>Zero downtime:</strong> Traffic switch is instantaneous.</li>
+          <li><strong>Instant rollback:</strong> Just flip the load balancer back to Blue.</li>
+          <li><strong>Reduces release risk:</strong> New version tested in a production-identical environment before going live.</li>
+          <li><strong>Consistent environments:</strong> Both environments are identical.</li>
+        </ul>
+
+        <h4>Disadvantages</h4>
+        <ul>
+          <li><strong>Cost:</strong> Requires double the infrastructure (two full environments).</li>
+          <li><strong>Database migrations:</strong> Schema changes must be backward-compatible during transition.</li>
+          <li><strong>Not suitable</strong> for very frequent deployments (expensive standby).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q13. Explain Canary deployment strategy.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>What is Canary Deployment?</h4>
+        <p>Canary deployment is a technique where a new version is released to a <strong>small subset of users</strong> first (the "canary"), while the majority continue using the stable version. Traffic is gradually shifted as confidence grows.</p>
+        <p>The name comes from the historical use of canary birds in coal mines — they were sensitive to dangerous gases and served as early warning systems. Similarly, the small "canary" user group acts as an early detector for production issues.</p>
+
+        <div class="diagram">Stage 1: 5% canary
+  Users ──▶ [Load Balancer]
+              │         │
+           95% ↓     5% ↓
+          v1.0 servers  v2.0 canary
+
+Stage 2: 30% if metrics good
+Stage 3: 100% — full rollout</div>
+
+        <h4>How It Works</h4>
+        <ol>
+          <li>Deploy the new version to a small number of servers (e.g., 2 out of 20).</li>
+          <li>Route <strong>5–10% of production traffic</strong> to the new version.</li>
+          <li>Monitor key metrics: error rate, latency, user experience.</li>
+          <li>Gradually increase traffic: 5% → 25% → 50% → 100%.</li>
+          <li>If issues are detected at any stage, <strong>roll back</strong> by routing all traffic to v1.0.</li>
+          <li>If all metrics are healthy, complete the rollout.</li>
+        </ol>
+
+        <h4>Advantages</h4>
+        <ul>
+          <li><strong>Real user feedback:</strong> Tests with actual production traffic and data.</li>
+          <li><strong>Lower blast radius:</strong> Issues affect only a small percentage of users.</li>
+          <li><strong>Data-driven decisions:</strong> Metrics guide the rollout progression.</li>
+          <li><strong>Cost-efficient:</strong> No need to maintain full duplicate environment.</li>
+        </ul>
+
+        <h4>Disadvantages</h4>
+        <ul>
+          <li>Requires sophisticated traffic splitting (e.g., via Kubernetes Ingress, Istio, or feature flags).</li>
+          <li>Managing two versions simultaneously adds operational complexity.</li>
+          <li>Database compatibility must be maintained between v1 and v2 during rollout.</li>
+        </ul>
+
+        <h4>Tools for Canary Deployments</h4>
+        <p>Kubernetes (with Argo Rollouts), Istio, AWS CodeDeploy, Spinnaker, LaunchDarkly (feature flags).</p>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q5. Explain different deployment strategies such as Blue-Green, Canary, and Rolling Deployment.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction</h4>
+        <p>Deployment strategies define <strong>how new software versions are released to production</strong> with minimal risk and downtime. Choosing the right strategy depends on factors like application criticality, infrastructure, release frequency, and risk tolerance.</p>
+
+        <h4>1. Recreate (Basic) Deployment</h4>
+        <p>The simplest strategy: shut down v1, deploy v2. Causes downtime. Suitable only for dev/test environments or non-critical apps.</p>
+        <div class="diagram">v1 [STOP] → v2 [START]   (Downtime during transition)</div>
+
+        <h4>2. Rolling Deployment</h4>
+        <p>In a rolling deployment, instances of the old version are <strong>gradually replaced</strong> with the new version, one batch at a time — without taking the entire application offline.</p>
+        <div class="diagram">Initial:  [v1][v1][v1][v1][v1][v1]
+Step 1:   [v2][v2][v1][v1][v1][v1]  (2 updated)
+Step 2:   [v2][v2][v2][v2][v1][v1]  (4 updated)
+Step 3:   [v2][v2][v2][v2][v2][v2]  (all updated)</div>
+        <p><strong>Advantages:</strong> No extra infrastructure needed; gradual transition; easy with Kubernetes (RollingUpdate strategy).<br>
+        <strong>Disadvantages:</strong> Both v1 and v2 run simultaneously (session handling issues); slower rollout; rollback is slow (must re-roll all instances).</p>
+        <div class="diagram">Kubernetes Rolling Update:
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1   # max pods down at a time
+      maxSurge: 1         # max extra pods during update</div>
+
+        <h4>3. Blue-Green Deployment</h4>
+        <p>Maintains two identical environments (Blue=current, Green=new). Traffic is switched atomically via load balancer.</p>
+        <div class="diagram">Blue (v1) ──[Active]──▶ Users
+Green (v2) ──[Staging, tested]
+
+After switch:
+Blue (v1) ──[Idle, rollback ready]
+Green (v2) ──[Active]──▶ Users</div>
+        <p><strong>Advantages:</strong> Zero downtime; instant rollback; production-identical test environment.<br>
+        <strong>Disadvantages:</strong> Double infrastructure cost; database migration complexity.</p>
+
+        <h4>4. Canary Deployment</h4>
+        <p>Gradually shifts traffic from old to new version, monitoring metrics at each step before proceeding.</p>
+        <div class="diagram">Phase 1:  v1=95%, v2=5%   → Monitor errors/latency
+Phase 2:  v1=75%, v2=25%  → Metrics healthy? Continue
+Phase 3:  v1=50%, v2=50%  → A/B comparison
+Phase 4:  v1=0%,  v2=100% → Full rollout complete</div>
+        <p><strong>Advantages:</strong> Real user testing; small blast radius; data-driven rollout decisions.<br>
+        <strong>Disadvantages:</strong> Requires traffic splitting infrastructure; version compatibility during rollout.</p>
+
+        <h4>5. Feature Flag (Dark Launch) Deployment</h4>
+        <p>Code is deployed but new features are <strong>toggled on/off</strong> via feature flags, independently of deployment. Allows deploying code without exposing features to users.</p>
+        <div class="diagram">if (featureFlag.isEnabled("new_checkout", user)) {
+    showNewCheckout();
+} else {
+    showOldCheckout();
+}</div>
+
+        <h4>Comparison Table</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Strategy</th><th>Downtime</th><th>Rollback Speed</th><th>Cost</th><th>Complexity</th><th>Best For</th></tr>
+            <tr><td>Recreate</td><td>Yes</td><td>Slow</td><td>Low</td><td>Low</td><td>Dev/Test</td></tr>
+            <tr><td>Rolling</td><td>No</td><td>Slow</td><td>Low</td><td>Medium</td><td>Stateless apps</td></tr>
+            <tr><td>Blue-Green</td><td>No</td><td>Instant</td><td>High</td><td>Medium</td><td>Critical apps</td></tr>
+            <tr><td>Canary</td><td>No</td><td>Fast</td><td>Medium</td><td>High</td><td>Risk-averse orgs</td></tr>
+            <tr><td>Feature Flags</td><td>No</td><td>Instant</td><td>Low</td><td>High</td><td>SaaS, A/B testing</td></tr>
+          </table>
+        </div>
+
+        <h4>Choosing the Right Strategy</h4>
+        <ul>
+          <li><strong>High-traffic, critical app with strict SLA:</strong> Blue-Green</li>
+          <li><strong>Need to test with real users before full rollout:</strong> Canary</li>
+          <li><strong>Limited infrastructure budget, stateless app:</strong> Rolling</li>
+          <li><strong>Need to decouple deployment from release:</strong> Feature Flags</li>
+          <li><strong>Dev/test environment:</strong> Recreate (simplest)</li>
+        </ul>
+
+        <h4>Conclusion</h4>
+        <p>Modern DevOps organizations often combine strategies — for example, using Canary + Feature Flags together. Kubernetes natively supports Rolling and Canary (via Argo Rollouts), while cloud providers (AWS, Azure, GCP) offer managed Blue-Green deployment services. The key goal of all strategies is to <strong>minimize user impact while maximizing deployment frequency and confidence</strong>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 5: Infrastructure as Code -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t5" id="t5">
+  <div class="topic-header">
+    <div class="topic-num">05</div>
+    <div>
+      <h2>Infrastructure as Code (IaC)</h2>
+      <p>IaC concepts, Terraform, configuration management, and related tools</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=tomUWcQ0P3k" target="_blank">Terraform Full Course (freeCodeCamp)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=l5k1ai_GBDE" target="_blank">IaC Explained (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=7xngnjfIlK4" target="_blank">Terraform Tutorial for Beginners</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q15. Define Infrastructure as Code (IaC).</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Infrastructure as Code (IaC)</strong> is the practice of managing and provisioning infrastructure (servers, networks, databases, load balancers) through machine-readable configuration files instead of manual processes or interactive configuration tools.</div>
+        <p>IaC treats infrastructure the same way developers treat application code — version-controlled, testable, and repeatable. This eliminates configuration drift, enables consistency across environments, and allows infrastructure to be versioned and rolled back. Tools: <strong>Terraform, AWS CloudFormation, Pulumi</strong>.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q16. What is configuration management?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Configuration Management (CM)</strong> is the process of systematically managing, tracking, and controlling the configuration of software, servers, and infrastructure components to maintain consistency and desired state over time.</div>
+        <p>CM tools ensure that servers are configured identically (no "snowflake servers"), automatically apply configurations at scale, and enforce compliance. They use a <strong>desired state</strong> model — you declare what the system should look like, and the tool makes it so. Tools: <strong>Ansible, Chef, Puppet, SaltStack</strong>.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q18. What is Terraform?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Terraform</strong> is an open-source IaC tool developed by HashiCorp that allows you to define and provision cloud infrastructure using a declarative configuration language called <strong>HCL (HashiCorp Configuration Language)</strong>.</div>
+        <p>Terraform is cloud-agnostic — it supports AWS, Azure, GCP, and hundreds of other providers through a plugin system. It maintains a <strong>state file</strong> to track deployed resources and can plan changes before applying them. Key commands: <code>terraform init</code>, <code>terraform plan</code>, <code>terraform apply</code>, <code>terraform destroy</code>.</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q14. Explain Infrastructure as Code with example.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Why IaC?</h4>
+        <p>Traditionally, infrastructure was provisioned manually — logging into a console or running scripts without version control. This led to:</p>
+        <ul>
+          <li><strong>Configuration drift:</strong> Servers gradually differ from each other due to manual changes.</li>
+          <li><strong>Snowflake servers:</strong> Servers so customized they can't be reproduced.</li>
+          <li><strong>No audit trail:</strong> No record of what changed, when, and why.</li>
+          <li><strong>Slow provisioning:</strong> Setting up a new environment takes days or weeks.</li>
+        </ul>
+        <p>IaC solves all these problems by treating infrastructure configuration as source code.</p>
+
+        <h4>IaC Approaches</h4>
+        <ul>
+          <li><strong>Declarative (What):</strong> You describe the desired end state; the tool figures out how to achieve it. Example: Terraform, CloudFormation. Idempotent by nature.</li>
+          <li><strong>Imperative (How):</strong> You write step-by-step instructions. Example: Bash scripts, Ansible tasks in procedural mode.</li>
+        </ul>
+
+        <h4>Example: Provisioning AWS Infrastructure with Terraform</h4>
+        <div class="diagram"># main.tf — Define an EC2 instance
+terraform {
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"   # Mumbai
+}
+
+resource "aws_instance" "web_server" {
+  ami           = "ami-0f5ee92e2d63afc18"  # Ubuntu 22.04
+  instance_type = "t2.micro"
+  tags = { Name = "MyWebServer", Environment = "Production" }
+}
+
+resource "aws_s3_bucket" "app_bucket" {
+  bucket = "my-devops-app-bucket-2024"
+  tags   = { Environment = "Production" }
+}</div>
+
+        <h4>Terraform Workflow</h4>
+        <ol>
+          <li><code>terraform init</code> — Download provider plugins</li>
+          <li><code>terraform plan</code> — Preview changes (what will be created/modified/deleted)</li>
+          <li><code>terraform apply</code> — Apply the changes to actual infrastructure</li>
+          <li><code>terraform destroy</code> — Tear down all managed infrastructure</li>
+        </ol>
+
+        <h4>Benefits of IaC</h4>
+        <ul>
+          <li><strong>Version control:</strong> Infrastructure changes tracked in Git like code.</li>
+          <li><strong>Reproducibility:</strong> Spin up identical environments in minutes.</li>
+          <li><strong>Consistency:</strong> Eliminate environment drift between dev/staging/production.</li>
+          <li><strong>Automation:</strong> Integrate with CI/CD pipelines for automated infrastructure changes.</li>
+          <li><strong>Documentation:</strong> The code itself documents the infrastructure.</li>
+          <li><strong>Cost saving:</strong> Easily destroy and recreate environments as needed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q6. Discuss Infrastructure as Code and configuration management tools in detail.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Infrastructure as Code (IaC) — Deep Dive</h4>
+        <p>IaC is the cornerstone of modern DevOps, enabling teams to provision, configure, and manage infrastructure with the same discipline as application code — version control, peer review, automated testing, and continuous deployment.</p>
+
+        <h4>IaC Categories</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Category</th><th>Purpose</th><th>Tools</th></tr>
+            <tr><td>Provisioning</td><td>Create cloud resources (VMs, networks, storage)</td><td>Terraform, CloudFormation, Pulumi</td></tr>
+            <tr><td>Configuration Mgmt</td><td>Configure software on existing servers</td><td>Ansible, Chef, Puppet, SaltStack</td></tr>
+            <tr><td>Container Orchestration</td><td>Manage containerized workloads</td><td>Kubernetes, Helm</td></tr>
+            <tr><td>Server Templating</td><td>Pre-bake server images</td><td>Packer, Docker</td></tr>
+          </table>
+        </div>
+
+        <h4>Terraform — Complete Guide</h4>
+        <p>Terraform uses the <strong>HashiCorp Configuration Language (HCL)</strong> to define infrastructure. Its architecture consists of:</p>
+        <ul>
+          <li><strong>Providers:</strong> Plugins for cloud platforms (AWS, Azure, GCP) and services (GitHub, Datadog)</li>
+          <li><strong>Resources:</strong> Infrastructure objects (EC2 instance, S3 bucket, VPC)</li>
+          <li><strong>State:</strong> A JSON file (terraform.tfstate) tracking all managed resources</li>
+          <li><strong>Modules:</strong> Reusable infrastructure components (like functions in code)</li>
+          <li><strong>Variables and Outputs:</strong> Parameterize configurations for reuse</li>
+        </ul>
+
+        <div class="diagram"># variables.tf
+variable "instance_type" { default = "t2.micro" }
+variable "region"         { default = "ap-south-1" }
+
+# main.tf
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.0.0"
+  name    = "devops-vpc"
+  cidr    = "10.0.0.0/16"
+}
+
+resource "aws_instance" "app" {
+  count         = 3
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+  subnet_id     = module.vpc.public_subnets[count.index]
+}
+
+# outputs.tf
+output "instance_ips" { value = aws_instance.app[*].public_ip }</div>
+
+        <h4>Configuration Management — Detailed</h4>
+        <p>Configuration management (CM) tools ensure that servers are in a <strong>known, desired state</strong> after provisioning. They handle software installation, service configuration, file management, and user setup.</p>
+
+        <h4>Ansible</h4>
+        <p>Agentless, uses SSH. YAML-based playbooks. Push-based model. Simple learning curve. Best for ad-hoc tasks and configuration management. Idempotent.</p>
+
+        <h4>Chef</h4>
+        <p>Agent-based (Chef Client on nodes). Uses <strong>Ruby DSL</strong>. Pull-based model. Highly scalable (used by Facebook). Concepts: Recipes, Cookbooks, Roles, Environments.</p>
+
+        <h4>Puppet</h4>
+        <p>Agent-based. Uses <strong>Puppet DSL</strong> (similar to Ruby). Pull-based. Excellent for enforcing compliance at scale. Concepts: Manifests, Modules, Classes, Facts, Catalog.</p>
+
+        <h4>SaltStack (Salt)</h4>
+        <p>Agent-based (Minions) with a Master. Uses <strong>YAML/Jinja</strong>. Can do push (from master) or pull. Very fast for large-scale automation. Concepts: States, Pillars, Grains.</p>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Tool</th><th>Language</th><th>Architecture</th><th>Agentless</th><th>Strengths</th></tr>
+            <tr><td>Ansible</td><td>YAML</td><td>Push</td><td>Yes (SSH)</td><td>Simple, quick start, agentless</td></tr>
+            <tr><td>Chef</td><td>Ruby DSL</td><td>Pull</td><td>No</td><td>Flexible, developer-friendly</td></tr>
+            <tr><td>Puppet</td><td>Puppet DSL</td><td>Pull</td><td>No</td><td>Strong compliance enforcement</td></tr>
+            <tr><td>SaltStack</td><td>YAML/Jinja</td><td>Push+Pull</td><td>No</td><td>Very fast at scale</td></tr>
+            <tr><td>Terraform</td><td>HCL</td><td>Push</td><td>API-based</td><td>Cloud provisioning, multi-cloud</td></tr>
+          </table>
+        </div>
+
+        <h4>IaC in a Complete DevOps Pipeline</h4>
+        <div class="diagram">Developer writes Terraform + Ansible code
+         ↓ (git push)
+CI Pipeline (Jenkins/GitHub Actions)
+         ↓
+terraform plan → Review changes
+         ↓ (PR approval)
+terraform apply → Infrastructure created (AWS/Azure/GCP)
+         ↓
+Ansible playbook → Configure software on new servers
+         ↓
+Application deployed via CD pipeline
+         ↓
+Monitoring validates infrastructure health</div>
+
+        <h4>Conclusion</h4>
+        <p>IaC and configuration management together provide the foundation for <strong>immutable infrastructure</strong> — rather than updating existing servers, you replace them with fresh, correctly configured instances. This dramatically reduces configuration drift, improves reliability, and enables true DevOps automation at scale.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 6: Ansible -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t6" id="t6">
+  <div class="topic-header">
+    <div class="topic-num">06</div>
+    <div>
+      <h2>Ansible</h2>
+      <p>Ansible architecture, playbooks, roles, modules, and inventory management</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=1id6ERvfozo" target="_blank">Ansible Full Course (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=goclfp6a2IQ" target="_blank">Ansible Tutorial (NetworkChuck)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=EcnqJbxBcM0" target="_blank">Ansible Playbooks (freeCodeCamp)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q17. What is Ansible?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Ansible</strong> is an open-source, agentless IT automation tool developed by Red Hat. It automates configuration management, application deployment, and task orchestration using simple YAML-based <strong>playbooks</strong>.</div>
+        <p>Ansible is <strong>agentless</strong> — it communicates with managed nodes over <strong>SSH</strong> (Linux) or <strong>WinRM</strong> (Windows), requiring no software to be installed on the target machines. It is idempotent: running the same playbook multiple times produces the same result. Written in Python.</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q15. Describe the architecture of Ansible.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Ansible Architecture Overview</h4>
+        <div class="diagram">┌────────────────────────────────────────┐
+│          CONTROL NODE (Ansible)         │
+│  ┌──────────┐  ┌──────────────────────┐│
+│  │Inventory │  │  Playbooks (YAML)    ││
+│  │ (hosts)  │  │  Roles / Modules     ││
+│  └──────────┘  └──────────────────────┘│
+└───────────────────────┬────────────────┘
+                        │ SSH (no agent)
+         ┌──────────────┼──────────────┐
+         ▼              ▼              ▼
+   ┌──────────┐   ┌──────────┐  ┌──────────┐
+   │ Node 1   │   │ Node 2   │  │ Node 3   │
+   │ (Linux)  │   │ (Linux)  │  │(Windows) │
+   └──────────┘   └──────────┘  └──────────┘
+         MANAGED NODES</div>
+
+        <h4>Key Components</h4>
+        <ul>
+          <li><strong>Control Node:</strong> The machine where Ansible is installed and playbooks are run from. Requires Python. Cannot be Windows (but can manage Windows nodes).</li>
+          <li><strong>Managed Nodes:</strong> Target machines that Ansible configures. Require Python (Linux) or PowerShell/WinRM (Windows). No Ansible agent needed.</li>
+          <li><strong>Inventory:</strong> A file (INI or YAML) listing managed nodes and groups. Can be static (file) or dynamic (cloud API).</li>
+          <li><strong>Playbooks:</strong> YAML files defining automation tasks. Ordered list of plays, each targeting a group of hosts.</li>
+          <li><strong>Modules:</strong> Reusable units of work (e.g., <code>apt</code>, <code>yum</code>, <code>copy</code>, <code>service</code>, <code>docker_container</code>). 3000+ built-in modules.</li>
+          <li><strong>Roles:</strong> A structured way to organize playbooks, variables, templates, and handlers into reusable units.</li>
+          <li><strong>Handlers:</strong> Tasks that run only when notified by another task (e.g., restart nginx after config change).</li>
+          <li><strong>Variables:</strong> Dynamic values in playbooks (host vars, group vars, extra vars).</li>
+          <li><strong>Templates (Jinja2):</strong> Configuration file templates with dynamic values.</li>
+          <li><strong>Facts:</strong> System information auto-collected from managed nodes (OS, IP, memory).</li>
+        </ul>
+
+        <h4>Inventory Example</h4>
+        <div class="diagram"># inventory.ini
+[webservers]
+web1.example.com
+web2.example.com ansible_user=ubuntu
+
+[databases]
+db1.example.com ansible_port=2222
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3</div>
+
+        <h4>Ansible Execution Flow</h4>
+        <ol>
+          <li>Read inventory to determine target hosts</li>
+          <li>Parse playbook YAML</li>
+          <li>Gather facts from target hosts (if enabled)</li>
+          <li>SSH into each target host</li>
+          <li>Copy and execute Python module code on the remote host</li>
+          <li>Return results (changed / ok / failed) to control node</li>
+          <li>Print summary report</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q7. Explain Ansible architecture and working with playbooks and roles.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction</h4>
+        <p>Ansible is one of the most popular DevOps automation tools, known for its simplicity, agentless architecture, and human-readable YAML syntax. It can configure systems, deploy applications, and orchestrate complex multi-tier deployments from a single control node.</p>
+
+        <h4>Ansible Architecture (Detailed)</h4>
+        <p>Ansible follows a <strong>push-based, agentless model</strong>. The control node pushes configurations to managed nodes over SSH without requiring any daemon or agent on the target machines.</p>
+
+        <div class="diagram">Control Node
+├── /etc/ansible/ansible.cfg     (Global configuration)
+├── /etc/ansible/hosts           (Default inventory)
+├── playbooks/
+│   ├── webserver.yml
+│   └── database.yml
+└── roles/
+    ├── nginx/
+    │   ├── tasks/main.yml
+    │   ├── handlers/main.yml
+    │   ├── templates/nginx.conf.j2
+    │   ├── vars/main.yml
+    │   └── defaults/main.yml
+    └── mysql/
+        └── tasks/main.yml</div>
+
+        <h4>Writing Ansible Playbooks</h4>
+        <p>A playbook is a YAML file containing one or more <strong>plays</strong>. Each play maps a set of tasks to a group of hosts.</p>
+
+        <div class="diagram"># webserver.yml — Install and configure Nginx
+---
+- name: Configure Web Servers
+  hosts: webservers
+  become: yes          # Run as sudo
+  vars:
+    http_port: 80
+    app_name: myapp
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Deploy Nginx configuration
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify: Restart Nginx        # Triggers handler
+
+    - name: Copy application files
+      copy:
+        src: /local/app/
+        dest: /var/www/{{ app_name }}/
+        owner: www-data
+        mode: '0755'
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted</div>
+
+        <h4>Ansible Roles — Organizing Complex Automation</h4>
+        <p>Roles are a structured way to package Ansible automation for reuse and sharing. Each role follows a standard directory structure:</p>
+
+        <div class="diagram">roles/nginx/
+├── tasks/
+│   └── main.yml      # Main task list
+├── handlers/
+│   └── main.yml      # Handlers (e.g., restart services)
+├── templates/
+│   └── nginx.conf.j2 # Jinja2 configuration templates
+├── files/
+│   └── index.html    # Static files to copy
+├── vars/
+│   └── main.yml      # Role-specific variables (high priority)
+├── defaults/
+│   └── main.yml      # Default variables (low priority, overridable)
+├── meta/
+│   └── main.yml      # Role metadata and dependencies
+└── README.md</div>
+
+        <div class="diagram"># Using roles in a playbook
+---
+- name: Deploy Full Stack Application
+  hosts: all
+  become: yes
+  roles:
+    - common          # Base system configuration
+    - { role: nginx, http_port: 8080 }  # Web server
+    - mysql           # Database
+    - { role: myapp, version: "2.1.0" } # Application</div>
+
+        <h4>Key Ansible Modules</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Module</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>apt / yum</td><td>Package management</td><td><code>apt: name=nginx state=present</code></td></tr>
+            <tr><td>copy</td><td>Copy files to remote</td><td><code>copy: src=app.conf dest=/etc/app/</code></td></tr>
+            <tr><td>template</td><td>Deploy Jinja2 templates</td><td><code>template: src=app.j2 dest=/etc/app.conf</code></td></tr>
+            <tr><td>service</td><td>Manage system services</td><td><code>service: name=nginx state=started</code></td></tr>
+            <tr><td>user</td><td>Manage system users</td><td><code>user: name=deploy shell=/bin/bash</code></td></tr>
+            <tr><td>file</td><td>Manage files/dirs/permissions</td><td><code>file: path=/var/www state=directory</code></td></tr>
+            <tr><td>git</td><td>Clone/manage Git repos</td><td><code>git: repo=https://... dest=/var/app</code></td></tr>
+            <tr><td>docker_container</td><td>Manage Docker containers</td><td><code>docker_container: name=web image=nginx</code></td></tr>
+            <tr><td>command / shell</td><td>Run arbitrary commands</td><td><code>shell: ./setup.sh</code></td></tr>
+            <tr><td>lineinfile</td><td>Manage lines in files</td><td><code>lineinfile: path=/etc/hosts line=...</code></td></tr>
+          </table>
+        </div>
+
+        <h4>Jinja2 Templates</h4>
+        <div class="diagram"># templates/nginx.conf.j2
+server {
+    listen {{ http_port }};
+    server_name {{ ansible_hostname }};
+    
+    root /var/www/{{ app_name }};
+    
+    {% if ssl_enabled %}
+    listen 443 ssl;
+    ssl_certificate {{ ssl_cert_path }};
+    {% endif %}
+}</div>
+
+        <h4>Running Ansible</h4>
+        <div class="diagram"># Ad-hoc command (single task)
+ansible webservers -m ping -i inventory.ini
+ansible all -m shell -a "df -h" -i inventory.ini
+
+# Run a playbook
+ansible-playbook -i inventory.ini webserver.yml
+ansible-playbook -i inventory.ini webserver.yml --check   # Dry run
+ansible-playbook -i inventory.ini webserver.yml --tags install
+ansible-playbook -i inventory.ini webserver.yml -l web1   # Limit to one host</div>
+
+        <h4>Advantages of Ansible</h4>
+        <ul>
+          <li><strong>Agentless:</strong> No software to install on managed nodes — reduces overhead.</li>
+          <li><strong>Simple YAML syntax:</strong> Readable by both developers and system administrators.</li>
+          <li><strong>Idempotent:</strong> Safe to run multiple times; produces consistent results.</li>
+          <li><strong>Large module library:</strong> 3000+ modules for cloud, networking, databases, containers.</li>
+          <li><strong>CI/CD integration:</strong> Easily integrated into Jenkins, GitHub Actions pipelines.</li>
+          <li><strong>Ansible Galaxy:</strong> Community repository of reusable roles.</li>
+        </ul>
+
+        <h4>Conclusion</h4>
+        <p>Ansible's agentless architecture, simple YAML syntax, and comprehensive module library make it the most accessible configuration management tool for teams of all sizes. Combined with roles for reusability and Ansible Tower/AWX for enterprise management, it provides a complete solution for automating infrastructure at scale in DevOps environments.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 7: Docker -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t7" id="t7">
+  <div class="topic-header">
+    <div class="topic-num">07</div>
+    <div>
+      <h2>Docker &amp; Containerization</h2>
+      <p>Containerization concepts, Docker architecture, Dockerfile, Docker Compose, and container management</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=3c-iBn73dDE" target="_blank">Docker Tutorial for Beginners (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=fqMOX6JJhGo" target="_blank">Docker Full Course (freeCodeCamp)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=pg19Z8LL06w" target="_blank">Docker Crash Course (Traversy Media)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q19. Define containerization.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Containerization</strong> is an OS-level virtualization method that packages an application and all its dependencies (libraries, runtime, config files) into a single, portable unit called a <strong>container</strong>.</div>
+        <p>Containers share the host OS kernel but run in isolated namespaces, making them lightweight (MB vs. GB for VMs) and fast to start (seconds vs. minutes). They guarantee the application runs the same way regardless of the environment — development, testing, or production. The leading containerization platform is <strong>Docker</strong>.</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q20. What is Docker?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Docker</strong> is an open-source containerization platform that enables developers to build, package, ship, and run applications as lightweight, portable containers.</div>
+        <p>Released in 2013 by Docker Inc., it uses Linux kernel features — <strong>namespaces</strong> (isolation) and <strong>cgroups</strong> (resource limits) — to create containers. Docker solved the classic "works on my machine" problem by bundling the app with its environment. Key components: Docker Engine, Docker Hub, Docker Compose, Docker Swarm.</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q16. Explain Docker architecture and components.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Docker Architecture</h4>
+        <p>Docker uses a <strong>client-server architecture</strong>. The Docker client communicates with the Docker daemon (server), which builds, runs, and manages containers.</p>
+
+        <div class="diagram">┌──────────────────────────────────────────────────────────┐
+│                    DOCKER HOST                            │
+│                                                           │
+│  ┌─────────────┐        ┌──────────────────────────────┐ │
+│  │Docker Client│◄──────▶│      Docker Daemon (dockerd) │ │
+│  │  (docker)   │ REST   │                              │ │
+│  └─────────────┘  API   │  ┌─────────┐ ┌─────────┐    │ │
+│                          │  │Container│ │Container│    │ │
+│  ┌─────────────┐         │  │  (App)  │ │  (DB)   │    │ │
+│  │ Docker Hub  │◄────────│  └─────────┘ └─────────┘    │ │
+│  │  (Registry) │  push/  │                              │ │
+│  └─────────────┘  pull   │  ┌─────────────────────┐    │ │
+│                          │  │   Images (layers)   │    │ │
+│                          │  └─────────────────────┘    │ │
+└──────────────────────────────────────────────────────────┘</div>
+
+        <h4>Key Components</h4>
+        <ul>
+          <li><strong>Docker Client:</strong> CLI tool (<code>docker</code> command). Sends commands to daemon via REST API. Can connect to remote daemons.</li>
+          <li><strong>Docker Daemon (dockerd):</strong> Background service that manages images, containers, networks, and volumes. Listens on a Unix socket.</li>
+          <li><strong>Docker Images:</strong> Read-only templates (blueprints) for containers. Built from a Dockerfile. Composed of layered file system changes. Stored in registries.</li>
+          <li><strong>Docker Containers:</strong> Running instances of images. Isolated, ephemeral. Have their own network interface, file system, and process tree.</li>
+          <li><strong>Docker Registry:</strong> Repository for Docker images. Docker Hub (public), Amazon ECR, Google GCR, private registries.</li>
+          <li><strong>Docker Volumes:</strong> Persistent storage for containers. Data survives container restarts and deletion.</li>
+          <li><strong>Docker Networks:</strong> Communication between containers. Bridge (default), Host, Overlay (multi-host) network drivers.</li>
+        </ul>
+
+        <h4>Containers vs. Virtual Machines</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aspect</th><th>Container</th><th>Virtual Machine</th></tr>
+            <tr><td>OS</td><td>Shares host kernel</td><td>Full OS per VM</td></tr>
+            <tr><td>Size</td><td>MBs</td><td>GBs</td></tr>
+            <tr><td>Startup</td><td>Seconds</td><td>Minutes</td></tr>
+            <tr><td>Isolation</td><td>Process-level</td><td>Full hardware-level</td></tr>
+            <tr><td>Performance</td><td>Near-native</td><td>Overhead from hypervisor</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q8. Explain Docker architecture, Dockerfile, and Docker Compose.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Docker Architecture (Detailed)</h4>
+        <p>Docker's architecture is built on the Linux kernel's <strong>namespaces</strong> and <strong>control groups (cgroups)</strong>:</p>
+        <ul>
+          <li><strong>Namespaces:</strong> Provide isolation — pid (process), net (networking), mnt (file system), uts (hostname), ipc, user namespaces.</li>
+          <li><strong>cgroups:</strong> Control resource allocation (CPU, memory, I/O) per container.</li>
+          <li><strong>Union File System (OverlayFS):</strong> Docker images use layered file system. Each Dockerfile instruction creates a new read-only layer. The container adds a writable layer on top.</li>
+        </ul>
+
+        <div class="diagram">Image layers (read-only):
+┌──────────────────────────────────┐
+│  Layer 4: COPY app/ /app/        │ ← Your app code
+├──────────────────────────────────┤
+│  Layer 3: RUN pip install        │ ← Python packages
+├──────────────────────────────────┤
+│  Layer 2: RUN apt install python │ ← System packages
+├──────────────────────────────────┤
+│  Layer 1: FROM ubuntu:22.04      │ ← Base OS
+└──────────────────────────────────┘
+Container layer (writable):
+┌──────────────────────────────────┐
+│  Writable container layer        │ ← Runtime changes
+└──────────────────────────────────┘</div>
+
+        <h4>Dockerfile — Complete Guide</h4>
+        <p>A <strong>Dockerfile</strong> is a text file containing instructions to build a Docker image. Each instruction creates a new layer.</p>
+
+        <div class="diagram"># Dockerfile — Multi-stage build for a Java Spring Boot app
+# ── Stage 1: Build ───────────────────────────────────────
+FROM maven:3.9-openjdk-17 AS builder
+WORKDIR /build
+COPY pom.xml .
+RUN mvn dependency:go-offline      # Cache dependencies
+COPY src/ src/
+RUN mvn clean package -DskipTests  # Build JAR
+
+# ── Stage 2: Runtime ─────────────────────────────────────
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+
+# Create non-root user (security best practice)
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Copy artifact from builder stage
+COPY --from=builder /build/target/*.jar app.jar
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget -qO- http://localhost:8080/actuator/health || exit 1
+
+ENTRYPOINT ["java", "-jar", "app.jar"]</div>
+
+        <h4>Dockerfile Instructions</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Instruction</th><th>Purpose</th></tr>
+            <tr><td>FROM</td><td>Base image to build upon</td></tr>
+            <tr><td>WORKDIR</td><td>Set working directory inside container</td></tr>
+            <tr><td>COPY / ADD</td><td>Copy files from host to image</td></tr>
+            <tr><td>RUN</td><td>Execute command during build (creates layer)</td></tr>
+            <tr><td>ENV</td><td>Set environment variables</td></tr>
+            <tr><td>EXPOSE</td><td>Document port the container listens on</td></tr>
+            <tr><td>CMD</td><td>Default command at container startup (overridable)</td></tr>
+            <tr><td>ENTRYPOINT</td><td>Main process of container (not easily overridden)</td></tr>
+            <tr><td>VOLUME</td><td>Create a mount point for persistent data</td></tr>
+            <tr><td>USER</td><td>Set the user for subsequent instructions</td></tr>
+            <tr><td>ARG</td><td>Build-time variables</td></tr>
+            <tr><td>HEALTHCHECK</td><td>Define container health check command</td></tr>
+          </table>
+        </div>
+
+        <h4>Common Docker Commands</h4>
+        <div class="diagram">docker build -t myapp:1.0 .          # Build image from Dockerfile
+docker images                         # List local images
+docker run -d -p 8080:80 --name web nginx  # Run container
+docker ps                             # List running containers
+docker exec -it web bash              # Shell into container
+docker logs web -f                    # Follow container logs
+docker stop web && docker rm web      # Stop and remove
+docker push myrepo/myapp:1.0          # Push to registry
+docker volume create appdata          # Create named volume
+docker network create mynet           # Create network</div>
+
+        <h4>Docker Compose — Multi-Container Applications</h4>
+        <p>Docker Compose uses a <strong>docker-compose.yml</strong> file to define and run multi-container Docker applications as a single service stack.</p>
+
+        <div class="diagram"># docker-compose.yml — Full Stack App
+version: '3.9'
+
+services:
+  # Web Application
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/appdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=cache
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    volumes:
+      - app-logs:/app/logs
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: appdb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+    networks:
+      - app-network
+
+  # Redis Cache
+  cache:
+    image: redis:7-alpine
+    networks:
+      - app-network
+
+  # Nginx Reverse Proxy
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  app-logs:</div>
+
+        <h4>Docker Compose Commands</h4>
+        <div class="diagram">docker-compose up -d        # Start all services (detached)
+docker-compose down         # Stop and remove containers
+docker-compose ps           # List service status
+docker-compose logs -f app  # Follow app logs
+docker-compose scale app=3  # Scale app to 3 instances</div>
+
+        <h4>Docker in CI/CD Pipeline</h4>
+        <div class="diagram">Developer pushes code → CI triggers
+Build Docker image: docker build -t app:${BUILD_ID} .
+Run tests: docker run app:${BUILD_ID} mvn test
+Security scan: trivy image app:${BUILD_ID}
+Push to registry: docker push registry/app:${BUILD_ID}
+Deploy: kubectl set image deployment/app app=registry/app:${BUILD_ID}</div>
+
+        <h4>Conclusion</h4>
+        <p>Docker revolutionized application deployment by providing a consistent, portable, and efficient packaging format. Dockerfiles enable reproducible image builds, while Docker Compose simplifies local multi-service development. Together, they form the foundation for cloud-native, microservices-based architectures — where each service runs as an independent container orchestrated by Kubernetes in production.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 8: Kubernetes -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t8" id="t8">
+  <div class="topic-header">
+    <div class="topic-num">08</div>
+    <div>
+      <h2>Kubernetes (K8s)</h2>
+      <p>Kubernetes architecture, Pods, Services, Deployments, and container orchestration</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=X48VuDVv0do" target="_blank">Kubernetes Full Course (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=s_o8dwzRlu4" target="_blank">Kubernetes Crash Course (freeCodeCamp)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=cC46cg5FFAM" target="_blank">Kubernetes Tutorial (KodeKloud)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q21. What is Kubernetes?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>Kubernetes (K8s)</strong> is an open-source container orchestration platform originally developed by Google (released 2014) that automates the deployment, scaling, load balancing, self-healing, and management of containerized applications.</div>
+        <p>K8s manages clusters of nodes, scheduling containers (in Pods) onto available resources. It provides features like auto-scaling, rolling updates, service discovery, storage orchestration, and self-healing (automatic pod restart on failure). Now governed by the CNCF (Cloud Native Computing Foundation).</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q22. Define Pod in Kubernetes.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box">A <strong>Pod</strong> is the smallest deployable unit in Kubernetes. It represents one or more tightly coupled containers that share the same network namespace (IP address and ports), storage volumes, and lifecycle.</div>
+        <p>Containers within a Pod communicate via <code>localhost</code>. Pods are ephemeral — they are created, destroyed, and replaced by Kubernetes automatically. In most cases, a Pod contains a single container. Multi-container Pods are used for sidecar patterns (e.g., logging sidecar, proxy sidecar with Envoy/Istio).</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q17. Explain Kubernetes architecture.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Kubernetes Architecture Overview</h4>
+        <p>A Kubernetes cluster consists of a <strong>Control Plane (Master)</strong> and one or more <strong>Worker Nodes</strong>.</p>
+
+        <div class="diagram">┌──────────────────────────────────────────────────────┐
+│               CONTROL PLANE (Master)                  │
+│  ┌──────────────┐  ┌──────────┐  ┌───────────────┐  │
+│  │ API Server   │  │ etcd     │  │  Scheduler    │  │
+│  │ (kube-api)  │  │ (State)  │  │  (kube-sched) │  │
+│  └──────────────┘  └──────────┘  └───────────────┘  │
+│  ┌──────────────────────────────────────────────────┐ │
+│  │       Controller Manager (kube-controller-mgr)   │ │
+│  └──────────────────────────────────────────────────┘ │
+└──────────────────────────┬───────────────────────────┘
+                           │
+           ┌───────────────┼───────────────┐
+           ▼               ▼               ▼
+   ┌───────────────┐┌───────────────┐┌───────────────┐
+   │  WORKER NODE  ││  WORKER NODE  ││  WORKER NODE  │
+   │  ┌─────────┐  ││  ┌─────────┐  ││  ┌─────────┐  │
+   │  │ kubelet │  ││  │ kubelet │  ││  │ kubelet │  │
+   │  ├─────────┤  ││  ├─────────┤  ││  ├─────────┤  │
+   │  │ kube-   │  ││  │ kube-   │  ││  │ kube-   │  │
+   │  │ proxy   │  ││  │ proxy   │  ││  │ proxy   │  │
+   │  ├─────────┤  ││  ├─────────┤  ││  ├─────────┤  │
+   │  │ Runtime │  ││  │ Runtime │  ││  │ Runtime │  │
+   │  │(Docker) │  ││  │(Docker) │  ││  │(Docker) │  │
+   │  └─────────┘  ││  └─────────┘  ││  └─────────┘  │
+   │  [Pod][Pod]   ││  [Pod][Pod]   ││  [Pod][Pod]   │
+   └───────────────┘└───────────────┘└───────────────┘</div>
+
+        <h4>Control Plane Components</h4>
+        <ul>
+          <li><strong>kube-apiserver:</strong> The front-end REST API for the cluster. All commands (kubectl) go through it. It validates and processes API requests.</li>
+          <li><strong>etcd:</strong> Distributed key-value store — the single source of truth for all cluster state data (what pods exist, their status, etc.).</li>
+          <li><strong>kube-scheduler:</strong> Watches for newly created Pods with no assigned node. Selects the best worker node based on resource requirements, affinity rules, and constraints.</li>
+          <li><strong>kube-controller-manager:</strong> Runs controller loops that ensure the actual state matches the desired state. Includes Node Controller, ReplicaSet Controller, Deployment Controller, etc.</li>
+          <li><strong>cloud-controller-manager:</strong> Integrates with cloud provider APIs (AWS, GCP, Azure) for load balancers, storage, and node management.</li>
+        </ul>
+
+        <h4>Worker Node Components</h4>
+        <ul>
+          <li><strong>kubelet:</strong> Agent running on each node. Receives Pod specs from the API server and ensures containers are running correctly. Reports node/pod status.</li>
+          <li><strong>kube-proxy:</strong> Network proxy that maintains network rules. Enables communication to Pods from inside or outside the cluster using iptables/IPVS rules.</li>
+          <li><strong>Container Runtime:</strong> Software that runs containers. Kubernetes supports containerd, CRI-O, and Docker (via shim). Implements the Container Runtime Interface (CRI).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q18. Describe Pods, Services, and Deployments in Kubernetes.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>1. Pods</h4>
+        <p>Pods are the basic unit of deployment. A Pod spec defines container image, ports, resource limits, environment variables, and volume mounts.</p>
+        <div class="diagram"># pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp
+    image: myapp:1.0
+    ports:
+    - containerPort: 8080
+    resources:
+      requests: { cpu: "100m", memory: "128Mi" }
+      limits:   { cpu: "500m", memory: "256Mi" }</div>
+
+        <h4>2. Services</h4>
+        <p>Pods are ephemeral with dynamic IPs. A <strong>Service</strong> provides a stable network endpoint (DNS name and IP) that routes traffic to matching Pods via label selectors. Types:</p>
+        <ul>
+          <li><strong>ClusterIP (default):</strong> Internal cluster access only. Used for inter-service communication.</li>
+          <li><strong>NodePort:</strong> Exposes service on each node's IP at a static port (30000–32767). External access via NodeIP:NodePort.</li>
+          <li><strong>LoadBalancer:</strong> Provisions a cloud load balancer (AWS ELB, GCP LB). External access via LB IP.</li>
+          <li><strong>ExternalName:</strong> Maps service to a DNS name (e.g., an external database).</li>
+        </ul>
+        <div class="diagram"># service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: myapp          # Routes to pods with this label
+  ports:
+  - port: 80
+    targetPort: 8080</div>
+
+        <h4>3. Deployments</h4>
+        <p>A <strong>Deployment</strong> manages ReplicaSets and provides declarative updates. It ensures the desired number of Pod replicas are always running and supports rolling updates and rollbacks.</p>
+        <div class="diagram"># deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3           # Always maintain 3 pods
+  selector:
+    matchLabels:
+      app: myapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:2.0    # Update image version for rollout
+        ports:
+        - containerPort: 8080</div>
+
+        <p>Key Deployment commands:</p>
+        <div class="diagram">kubectl apply -f deployment.yaml      # Deploy/update
+kubectl rollout status deployment/myapp # Watch rollout
+kubectl rollout undo deployment/myapp   # Rollback
+kubectl scale deployment/myapp --replicas=5  # Scale</div>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q9. Discuss Kubernetes architecture and explain Pods, Services, and Deployments.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction to Kubernetes</h4>
+        <p>Kubernetes (K8s) is the de-facto standard for container orchestration in production. Born from Google's internal Borg system, it automates every aspect of running containers at scale: scheduling, scaling, networking, storage, self-healing, and updates. It makes running hundreds of microservices as manageable as running one.</p>
+
+        <h4>Kubernetes Architecture (Complete)</h4>
+        <p>A K8s cluster has two types of machines:</p>
+
+        <div class="diagram">CONTROL PLANE:                    WORKER NODES:
+┌─────────────────────────┐       ┌────────────────────┐
+│ API Server (REST)        │◄─────►│ kubelet (agent)    │
+│ etcd (state store)       │       │ kube-proxy (net)   │
+│ Scheduler               │       │ Container Runtime  │
+│ Controller Manager       │       │ Pods (containers)  │
+└─────────────────────────┘       └────────────────────┘</div>
+
+        <h4>Core Workload Objects</h4>
+
+        <p><strong>Pods</strong> — Smallest unit. Contains one or more containers sharing network and storage.</p>
+        <p><strong>ReplicaSet</strong> — Ensures a specified number of identical Pod replicas are always running. If a Pod dies, ReplicaSet creates a new one.</p>
+        <p><strong>Deployment</strong> — Manages ReplicaSets. Provides rolling updates, rollbacks, and scaling. This is the most common way to deploy stateless apps.</p>
+        <p><strong>StatefulSet</strong> — For stateful applications (databases). Provides stable network identities and persistent storage per Pod.</p>
+        <p><strong>DaemonSet</strong> — Runs one Pod per node. Used for cluster-wide services like log collectors (Fluentd) or monitoring agents (Prometheus node-exporter).</p>
+        <p><strong>Job / CronJob</strong> — For batch processing. Jobs run to completion. CronJobs run on a schedule.</p>
+
+        <h4>Networking in Kubernetes</h4>
+        <ul>
+          <li>Every Pod gets a unique cluster-internal IP address</li>
+          <li>Pods can communicate with any other Pod without NAT</li>
+          <li>Services provide stable DNS names and load balancing across Pod replicas</li>
+          <li>Ingress controllers (Nginx, Traefik) route external HTTP/S traffic to Services</li>
+          <li>Network Policies control traffic flow between Pods (firewall rules)</li>
+        </ul>
+
+        <h4>Storage in Kubernetes</h4>
+        <ul>
+          <li><strong>Volumes:</strong> Ephemeral storage within a Pod's lifetime</li>
+          <li><strong>PersistentVolume (PV):</strong> Cluster-level storage resource (NFS, EBS, GCE Disk)</li>
+          <li><strong>PersistentVolumeClaim (PVC):</strong> Pod's request for storage. Kubernetes matches PVC to an available PV</li>
+          <li><strong>StorageClass:</strong> Dynamic PV provisioning from cloud storage APIs</li>
+        </ul>
+
+        <h4>Complete Application Example</h4>
+        <div class="diagram"># Complete 3-tier deployment: App + DB + Redis
+
+# 1. MySQL StatefulSet (Database)
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: mysql }
+  template:
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata: { name: mysql-storage }
+    spec:
+      accessModes: [ReadWriteOnce]
+      resources:
+        requests: { storage: 10Gi }
+---
+# 2. Application Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: myapp }
+  template:
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:2.0
+        env:
+        - name: DB_HOST
+          value: mysql-service
+        resources:
+          requests: { cpu: "200m", memory: "256Mi" }
+          limits:   { cpu: "1",    memory: "512Mi" }
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+---
+# 3. Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: myapp-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: myapp
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70</div>
+
+        <h4>Key Kubernetes Commands</h4>
+        <div class="diagram">kubectl get pods -n myapp           # List pods in namespace
+kubectl describe pod myapp-abc123   # Detailed pod info
+kubectl logs myapp-abc123 -f        # Follow pod logs
+kubectl exec -it myapp-abc123 -- sh # Shell into pod
+kubectl apply -f manifests/         # Apply all YAML files
+kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl top nodes                   # Node resource usage
+kubectl top pods                    # Pod resource usage</div>
+
+        <h4>Kubernetes vs. Docker Swarm</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>Kubernetes</th><th>Docker Swarm</th></tr>
+            <tr><td>Complexity</td><td>High — steep learning curve</td><td>Low — easy to set up</td></tr>
+            <tr><td>Scalability</td><td>Excellent — thousands of nodes</td><td>Good — smaller clusters</td></tr>
+            <tr><td>Auto-scaling</td><td>Built-in HPA/VPA</td><td>Manual only</td></tr>
+            <tr><td>Ecosystem</td><td>Vast (Helm, Istio, ArgoCD)</td><td>Limited</td></tr>
+            <tr><td>Industry adoption</td><td>Industry standard</td><td>Declining</td></tr>
+          </table>
+        </div>
+
+        <h4>Conclusion</h4>
+        <p>Kubernetes has become the industry-standard platform for running containerized applications at scale. Its rich object model (Pods, Services, Deployments, StatefulSets, ConfigMaps, Secrets), powerful networking, and extensive ecosystem make it the foundation of cloud-native DevOps. Understanding Kubernetes is essential for any DevOps engineer working with modern, containerized infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 9: Monitoring & Cloud -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t9" id="t9">
+  <div class="topic-header">
+    <div class="topic-num">09</div>
+    <div>
+      <h2>Monitoring, Cloud &amp; Observability</h2>
+      <p>DevOps monitoring tools, cloud service models, and observability practices</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=h4Sl21AKiDg" target="_blank">Prometheus & Grafana Tutorial (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=QoDqxm7ybLc" target="_blank">DevOps Monitoring Explained (KodeKloud)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q23. What are cloud service models?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <p>Cloud service models define the <strong>level of abstraction and responsibility</strong> in cloud computing. There are three primary models:</p>
+        <ul>
+          <li><strong>IaaS (Infrastructure as a Service):</strong> Provides virtualized computing resources — VMs, networking, storage. Users manage OS and above. Example: AWS EC2, Azure VMs, GCP Compute Engine.</li>
+          <li><strong>PaaS (Platform as a Service):</strong> Provides a platform to deploy and run applications. Provider manages OS, runtime, middleware. User manages the application and data. Example: AWS Elastic Beanstalk, Heroku, Google App Engine.</li>
+          <li><strong>SaaS (Software as a Service):</strong> Fully managed application delivered over the internet. User only consumes the software. Example: Gmail, Salesforce, Microsoft 365, Jira.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q19. Explain monitoring tools used in DevOps.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Why Monitoring Matters in DevOps</h4>
+        <p>Monitoring is the final phase of the DevOps lifecycle and closes the feedback loop. Without monitoring, teams are "flying blind" in production. Effective monitoring enables:</p>
+        <ul>
+          <li>Early detection of issues before users are affected</li>
+          <li>Understanding performance baselines and trends</li>
+          <li>Data-driven capacity planning</li>
+          <li>Faster incident response and root cause analysis</li>
+        </ul>
+
+        <h4>The Three Pillars of Observability</h4>
+        <ul>
+          <li><strong>Metrics:</strong> Numerical time-series data (CPU%, request rate, error rate, latency)</li>
+          <li><strong>Logs:</strong> Timestamped event records from applications and systems</li>
+          <li><strong>Traces:</strong> End-to-end request flow across microservices (distributed tracing)</li>
+        </ul>
+
+        <h4>Key DevOps Monitoring Tools</h4>
+
+        <p><strong>1. Prometheus</strong> — Open-source metrics monitoring system with a powerful query language (PromQL). Uses a pull model: scrapes metrics from configured endpoints at intervals. Integrates natively with Kubernetes.</p>
+
+        <p><strong>2. Grafana</strong> — Visualization and dashboarding tool. Connects to Prometheus, Elasticsearch, InfluxDB, and other data sources. Provides beautiful, interactive dashboards. Supports alerting rules.</p>
+
+        <p><strong>3. ELK Stack (Elasticsearch + Logstash + Kibana)</strong></p>
+        <ul>
+          <li><strong>Elasticsearch:</strong> Distributed search and analytics engine for logs</li>
+          <li><strong>Logstash:</strong> Log ingestion pipeline — collects, parses, and transforms logs</li>
+          <li><strong>Kibana:</strong> Visualization UI for Elasticsearch data</li>
+          <li>Modern alternative: EFK Stack (Fluent Bit/Fluentd instead of Logstash)</li>
+        </ul>
+
+        <p><strong>4. Nagios</strong> — Veteran infrastructure monitoring tool. Monitors hosts, services, and network devices. Sends alerts via email/SMS when thresholds are crossed. Agent-based (NRPE).</p>
+
+        <p><strong>5. Datadog</strong> — Comprehensive cloud monitoring SaaS platform. Combines metrics, logs, APM (Application Performance Monitoring), and security in one platform. Excellent cloud and Kubernetes integrations.</p>
+
+        <p><strong>6. Jaeger / Zipkin</strong> — Distributed tracing systems for microservices. Trace requests across multiple services to identify bottlenecks.</p>
+
+        <div class="table-wrap">
+          <table>
+            <tr><th>Tool</th><th>Type</th><th>Best For</th></tr>
+            <tr><td>Prometheus</td><td>Metrics</td><td>Kubernetes/cloud-native metrics</td></tr>
+            <tr><td>Grafana</td><td>Visualization</td><td>Dashboards and alerting</td></tr>
+            <tr><td>ELK Stack</td><td>Logs</td><td>Centralized log management</td></tr>
+            <tr><td>Nagios</td><td>Infrastructure</td><td>Traditional server monitoring</td></tr>
+            <tr><td>Datadog</td><td>Full-stack APM</td><td>Enterprise cloud monitoring</td></tr>
+            <tr><td>Jaeger</td><td>Tracing</td><td>Microservice request tracing</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TOPIC 10: DevSecOps -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="topic-card t10" id="t10">
+  <div class="topic-header">
+    <div class="topic-num">10</div>
+    <div>
+      <h2>DevSecOps</h2>
+      <p>Security integration in DevOps, shifting security left, and security practices in CI/CD pipelines</p>
+    </div>
+  </div>
+  <div class="resource-strip">
+    <span class="resource-label">📺 Free Resources</span>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=nrhxNNH5lt0" target="_blank">DevSecOps Full Course (Simplilearn)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=F5KJVuii0Yw" target="_blank">DevSecOps Explained (TechWorld with Nana)</a>
+    <a class="resource-link" href="https://www.youtube.com/watch?v=YiKeF9LqmZo" target="_blank">Shift Left Security (KodeKloud)</a>
+  </div>
+  <div class="questions-section">
+    <h3>2-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m2">2 Marks</span>
+        <span class="q-text">Q24. What is DevSecOps?</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <div class="def-box"><strong>DevSecOps</strong> (Development + Security + Operations) is the practice of integrating security at every phase of the DevOps lifecycle — rather than treating it as a separate, end-of-pipeline activity.</div>
+        <p>It is based on the principle of <strong>"Shift Left" security</strong> — moving security checks earlier in the development process (to the left on the timeline), where fixing issues is cheaper and faster. DevSecOps makes security a shared responsibility of Dev, Sec, and Ops teams. Tools include SAST (SonarQube), DAST (OWASP ZAP), container scanning (Trivy), and secrets detection (GitLeaks).</p>
+      </div>
+    </div>
+
+    <h3>7-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m7">7 Marks</span>
+        <span class="q-text">Q20. Explain DevSecOps concepts.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Traditional Security Problem</h4>
+        <p>In traditional development, security was a "gate" at the end — security teams reviewed code just before release. This meant:</p>
+        <ul>
+          <li>Security issues discovered late are expensive to fix</li>
+          <li>Security became a bottleneck slowing releases</li>
+          <li>Developers saw security as "not their problem"</li>
+          <li>Attackers exploited the long window of vulnerability</li>
+        </ul>
+
+        <h4>The DevSecOps Approach — Shift Left</h4>
+        <p>DevSecOps embeds security into every phase of the CI/CD pipeline:</p>
+        <div class="diagram">Plan  → Threat modeling, security requirements review
+Code  → SAST (Static Analysis), pre-commit hooks, IDE security plugins
+Build → Dependency scanning (OWASP Dependency-Check, Snyk)
+Test  → DAST (Dynamic Analysis, OWASP ZAP), Penetration testing
+Release → Image scanning (Trivy, Clair), Signing (cosign)
+Deploy → Runtime security (Falco), network policies, RBAC
+Operate → WAF, IDS/IPS, SIEM (Splunk), secrets management (Vault)
+Monitor → Security event monitoring, anomaly detection, compliance</div>
+
+        <h4>Key DevSecOps Practices</h4>
+        <ul>
+          <li><strong>SAST (Static Application Security Testing):</strong> Analyzes source code without executing it to find vulnerabilities. Tools: SonarQube, Checkmarx, Veracode. Integrated into CI pipeline.</li>
+          <li><strong>DAST (Dynamic Application Security Testing):</strong> Tests the running application for vulnerabilities (SQL injection, XSS, CSRF). Tools: OWASP ZAP, Burp Suite.</li>
+          <li><strong>SCA (Software Composition Analysis):</strong> Scans third-party libraries and dependencies for known CVEs. Tools: Snyk, OWASP Dependency-Check, WhiteSource.</li>
+          <li><strong>Container Security:</strong> Scan Docker images for OS and package vulnerabilities. Tools: Trivy, Clair, Anchore.</li>
+          <li><strong>Secrets Management:</strong> Prevent hardcoded credentials. Tools: HashiCorp Vault, AWS Secrets Manager, GitLeaks (scan repos for secrets).</li>
+          <li><strong>Infrastructure Security:</strong> Scan IaC files (Terraform) for misconfigurations. Tools: Checkov, TFSec, Terrascan.</li>
+          <li><strong>Compliance as Code:</strong> Automated compliance checks (CIS benchmarks, PCI-DSS, HIPAA) using tools like InSpec, OpenSCAP.</li>
+        </ul>
+
+        <h4>Security Culture in DevSecOps</h4>
+        <p>DevSecOps is not just about tools — it requires cultural change: developers must be trained in secure coding practices (OWASP Top 10), security must be included in sprint planning, and security metrics must be tracked alongside delivery metrics.</p>
+      </div>
+    </div>
+
+    <h3>15-Mark Questions</h3>
+
+    <div class="q-block">
+      <div class="q-header" onclick="toggle(this)">
+        <span class="mark-badge m15">15 Marks</span>
+        <span class="q-text">Q10. Discuss DevSecOps and explain security practices in CI/CD pipelines.</span>
+        <span class="q-arrow">▼</span>
+      </div>
+      <div class="q-answer">
+        <h4>Introduction</h4>
+        <p>DevSecOps represents the evolution of DevOps by making security a <strong>first-class citizen</strong> in the software delivery lifecycle. The 2020 Verizon Data Breach Investigations Report found that 43% of breaches involved web application vulnerabilities — largely because security was addressed too late. DevSecOps addresses this by automating security at every stage of the CI/CD pipeline.</p>
+
+        <h4>The Cost of Late Security</h4>
+        <p>IBM's "Cost of a Data Breach" report consistently shows that fixing a vulnerability found in production costs <strong>30x more</strong> than fixing it during development. This is the economic argument for "Shift Left" security.</p>
+        <div class="diagram">Cost to fix: $1  → $10  → $100  → $1,000+
+Phase:       Design  Code   Test   Production</div>
+
+        <h4>DevSecOps Pipeline — Stage by Stage</h4>
+
+        <p><strong>Stage 1: Plan (Threat Modeling)</strong></p>
+        <p>Before writing code, identify potential threats using frameworks like <strong>STRIDE</strong> (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) or PASTA. Define security requirements alongside functional requirements.</p>
+
+        <p><strong>Stage 2: Code (Secure Development)</strong></p>
+        <ul>
+          <li>Developer training on OWASP Top 10 vulnerabilities</li>
+          <li>IDE security plugins (Snyk for VS Code, SonarLint)</li>
+          <li>Pre-commit hooks: run linters and secret scanners before each commit</li>
+          <li>GitLeaks/TruffleHog to prevent committing API keys, passwords</li>
+        </ul>
+        <div class="diagram"># .pre-commit-config.yaml
+repos:
+- repo: https://github.com/gitleaks/gitleaks
+  hooks:
+  - id: gitleaks  # Scan for hardcoded secrets
+- repo: https://github.com/PyCQA/bandit
+  hooks:
+  - id: bandit    # Python security linter</div>
+
+        <p><strong>Stage 3: Build (SAST + SCA)</strong></p>
+        <div class="diagram">stage('SAST - SonarQube') {
+  steps {
+    withSonarQubeEnv('SonarQube') {
+      sh 'mvn sonar:sonar'
+    }
+    waitForQualityGate abortPipeline: true
+  }
+}
+stage('SCA - Dependency Check') {
+  steps {
+    sh 'mvn org.owasp:dependency-check-maven:check'
+    // Fails build if CVSS score > 7 (High severity)
+  }
+}</div>
+
+        <p><strong>Stage 4: Test (DAST)</strong></p>
+        <p>Deploy to a test environment, then run Dynamic Application Security Testing:</p>
+        <div class="diagram">stage('DAST - OWASP ZAP') {
+  steps {
+    sh '''
+      docker run -t owasp/zap2docker-stable zap-baseline.py \
+        -t https://staging.myapp.com \
+        -r zap-report.html \
+        -z "-config scanner.maxDuration=5"
+    '''
+  }
+  post { always { publishHTML target: [reportName: 'ZAP Report'] } }
+}</div>
+
+        <p><strong>Stage 5: Build & Push (Container Scanning + Image Signing)</strong></p>
+        <div class="diagram">stage('Container Security') {
+  steps {
+    // Vulnerability scan
+    sh 'trivy image --severity HIGH,CRITICAL myapp:${BUILD_ID}'
+    // Compliance benchmark
+    sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+        docker/docker-bench-security'
+    // Sign the image (supply chain security)
+    sh 'cosign sign --key cosign.key myregistry/myapp:${BUILD_ID}'
+  }
+}</div>
+
+        <p><strong>Stage 6: Deploy (Kubernetes Security)</strong></p>
+        <ul>
+          <li><strong>RBAC:</strong> Role-Based Access Control limits who can do what in the cluster</li>
+          <li><strong>Pod Security Standards:</strong> Enforce non-root containers, read-only file systems</li>
+          <li><strong>Network Policies:</strong> Restrict Pod-to-Pod communication</li>
+          <li><strong>Secrets Management:</strong> Use HashiCorp Vault or K8s Secrets (base64-encoded, not plaintext)</li>
+          <li><strong>IaC Scanning:</strong> Scan Kubernetes manifests with Checkov or Kubesec</li>
+        </ul>
+
+        <p><strong>Stage 7: Operate &amp; Monitor (Runtime Security)</strong></p>
+        <ul>
+          <li><strong>Falco:</strong> Cloud-native runtime security — detects anomalous container behavior (e.g., unexpected shell spawned in container)</li>
+          <li><strong>WAF (Web Application Firewall):</strong> AWS WAF, Cloudflare — filters malicious web traffic</li>
+          <li><strong>SIEM:</strong> Splunk, IBM QRadar — aggregate and correlate security events</li>
+          <li><strong>Intrusion Detection:</strong> Snort, Suricata — detect network-level attacks</li>
+          <li><strong>Compliance Monitoring:</strong> AWS Security Hub, Azure Defender — continuous compliance checks</li>
+        </ul>
+
+        <h4>OWASP Top 10 — Most Critical Web Vulnerabilities</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><th>#</th><th>Vulnerability</th><th>Prevention</th></tr>
+            <tr><td>A01</td><td>Broken Access Control</td><td>Implement RBAC, test authorization</td></tr>
+            <tr><td>A02</td><td>Cryptographic Failures</td><td>Use strong encryption (TLS 1.3, AES-256)</td></tr>
+            <tr><td>A03</td><td>Injection (SQL, LDAP)</td><td>Parameterized queries, input validation</td></tr>
+            <tr><td>A04</td><td>Insecure Design</td><td>Threat modeling, secure design patterns</td></tr>
+            <tr><td>A05</td><td>Security Misconfiguration</td><td>Hardening, IaC security scanning</td></tr>
+            <tr><td>A06</td><td>Vulnerable Components</td><td>SCA scanning, dependency updates</td></tr>
+            <tr><td>A07</td><td>Auth Failures</td><td>MFA, secure session management</td></tr>
+            <tr><td>A08</td><td>Data Integrity Failures</td><td>Image signing, supply chain security</td></tr>
+            <tr><td>A09</td><td>Logging Failures</td><td>Centralized logging, audit trails</td></tr>
+            <tr><td>A10</td><td>SSRF</td><td>Validate URLs, allowlist egress</td></tr>
+          </table>
+        </div>
+
+        <h4>DevSecOps Metrics</h4>
+        <ul>
+          <li><strong>Mean Time to Detect (MTTD):</strong> How quickly vulnerabilities are found</li>
+          <li><strong>Mean Time to Remediate (MTTR):</strong> How quickly vulnerabilities are fixed</li>
+          <li><strong>Vulnerability density:</strong> Number of vulnerabilities per 1000 lines of code</li>
+          <li><strong>Security coverage:</strong> Percentage of code covered by security testing</li>
+          <li><strong>False positive rate:</strong> Accuracy of security tools</li>
+        </ul>
+
+        <h4>Conclusion</h4>
+        <p>DevSecOps transforms security from a bottleneck at the end of the pipeline into a <strong>continuous, automated, shared responsibility</strong> embedded throughout development. By integrating SAST, SCA, DAST, container scanning, secrets management, runtime protection, and compliance-as-code into the CI/CD pipeline, organizations can achieve both fast delivery and strong security posture. In today's threat landscape, DevSecOps is not optional — it is a business necessity.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+
+<footer>
+  <p>Build by Animesh</p>
+  <p>DevOps Complete Study Guide — University Exam Preparation</p>
+  <p style="margin-top:6px;">Covers all 55 questions from the official question bank | Topics 1–10</p>
+</footer>
+
+<script>
+function toggle(header) {
+  const block = header.parentElement;
+  block.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
